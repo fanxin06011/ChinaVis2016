@@ -12,7 +12,7 @@ $idlist=$_POST["idlist"];
 $idflag=$_POST["idflag"];
 
 
-$con = mysqli_connect('localhost:3306', 'root', 'root');
+$con = mysqli_connect('localhost', 'vis2016', 'vis2016');
 
 if (!$con)
  {
