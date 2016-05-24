@@ -1,0 +1,67 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+#view1 {
+  position: absolute;
+  left: 0%;
+  width:19%;
+  top: 0%;
+  height: 100%;
+  background-color: black;
+
+}
+#view2{
+  position: absolute;
+  left: 20%;
+  width:39%;
+  top: 0%;
+  height: 65%;
+  background-color: black;
+
+}
+
+#view3{
+  position: absolute;
+  left: 60%;
+  width:19%;
+  top: 0%;
+  height: 65%;
+  padding:1px 5px;
+  //background-color: black;
+  border:1px solid black;
+}
+
+#view4{
+  position: absolute;
+  left: 80%;
+  width:19%;
+  top: 0%;
+  height: 100%;
+  background-color: black;
+
+}
+
+#view5{
+  position: absolute;
+  top: 66%;
+  left: 20%;
+  width:14%;
+  height:34%;
+  //background-color: black;
+}
+#view6{
+  position: absolute;
+  top: 66%;
+  left: 35%;
+  width:44%;
+  height:34%;
+  //background-color: black;
+}
+
+
+
+
+
+

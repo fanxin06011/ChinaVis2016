@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>vis</title>
+  
+
+  
+
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="jslib/jquery-1.11.3.min.js"></script>
+  <script src="jslib/spin.min.js"></script>
+  <script src="jslib/underscore-min.js"></script>
+  <script src="jslib/svg.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script type="text/javascript" src="js/importfile.js"></script>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/view3.css">
+  <link rel="stylesheet" type="text/css" href="css/view6.css">
+</head>
+
+
+<body>
+  <div id="view1"></div>
+  <div id="view2"></div>
+  <div id="view3">
+	  <input style="display:none" type="file" id="file" onchange="handleFiles(this.files)" ls="" ></input>
+
+	  <p id="view3title">iplist</p>
+	  
+	  <span id="view3clear"><i class="fa fa-trash"></i>&nbsp clear</span>
+	  <span id="view3save"><i class="fa fa-save"></i>&nbsp save</span>
+	  <span id="view3load" ><i class="fa fa-upload"></i>&nbsp load</span>
+	  <span id="view3back" ><i class="fa fa-chevron-left"></i></span>
+	  <span id="view3retry" ><i class="fa fa-chevron-right"></i></span>
+
+
+
+	<div id="view3inner" >
+	</div>
+
+  </div>
+  
+  <div id="view4"></div>
+  
+  <div id="view5">
+    <p id="date"></p>
+  </div>
+  
+  <div id="view6">
+	<form id="view6choose">
+	ip:
+    <input type="radio" name="type" value="all" id="view6all" checked=”checked”/> all
+    <input type="radio" name="type" value="selected" id="view6selected"/> selected
+	&nbsp &nbsp &nbsp
+	<span id="view6play"><i class="fa fa-play"></i>&nbsp play</span>
+	<span id="view6stop"><i class="fa fa-stop"></i>&nbsp stop</span>
+    </form>
+  </div>
+  
+  <link rel="stylesheet" href="datepicker/css/datepicker.css" type="text/css" />
+  <script type="text/javascript" src="datepicker/js/jquery.js"></script>
+  <script type="text/javascript" src="datepicker/js/datepicker.js"></script>
+  <script type="text/javascript" src="datepicker/js/eye.js"></script>
+  <script type="text/javascript" src="datepicker/js/utils.js"></script>
+  
+  
+  <script type="text/javascript" src="js/view5.js"></script>
+  <script type="text/javascript" src="js/view1.js"></script>
+  <script type="text/javascript" src="js/view3.js"></script>
+  <script type="text/javascript" src="js/view6.js"></script>
+  <script type="text/javascript" src="js/observer.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>

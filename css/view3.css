@@ -1,0 +1,65 @@
+#view3.fa-spinner{
+	color: #999999;
+}
+#view3title{
+	font:10px "Trebuchet MS", Helvetica, "Helvetica Neue", Arial, sans-serif;
+	font-weight:800; 
+    //background:#fff;
+	border-bottom: 1px solid black;
+
+}
+div#listbtn{
+	//background-color: white;
+	padding: 0px 0px;
+}
+
+.v3btn{
+	font:4px "Trebuchet MS", Helvetica, "Helvetica Neue", Arial, sans-serif;
+	border-radius: 6px;
+}
+.idlistp{
+	font-family:Verdana;
+	font-size:1vw;
+	margin: 2%;
+}
+.filea {
+	padding: 2px;
+	
+    position: relative;
+    display: inline-block;
+	background: #EEEFED;
+
+    border: 1px solid grey;
+    border-radius: 1px;
+    /*padding: 4px 12px;*/
+	margin-top:5px;
+    overflow: hidden;
+    color: black;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 15px;
+	border-radius: 6px;
+}
+.filea input {
+	padding: 2px;
+    position: absolute;
+    /*font-size: 6px;
+	//font-family: sans-serif;*/
+	font:4px "Trebuchet MS", Helvetica, "Helvetica Neue", Arial, sans-serif;
+    right: 0;
+    top: 0px;
+    opacity: 0;
+}
+.deleteid{
+	font:4px "Trebuchet MS", Helvetica, "Helvetica Neue", Arial, sans-serif;
+	/*font-size:.3wv;*/
+	//width:28%;
+	//height:9%;
+	position:absolute;
+	//background-color: #e8f4ff;
+	left:80%;
+	border-radius: 6px;
+}
+.fa-remove{
+	color:#999999;
+}
