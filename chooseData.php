@@ -12,25 +12,25 @@ $idlist=$_POST["idlist"];
 $idflag=$_POST["idflag"];
 
 
-$con = mysqli_connect('localhost', 'vis2016', 'vis2016');
+$con = mysql_connect('localhost', 'vis2016', 'vis2016');
 
 if (!$con)
  {
- die("Connection failed: " . mysqli_connect_error());
+ die("Connection failed: " . mysql_error());
  }
-mysqli_select_db($con,"vis");
+mysql_select_db($con,"vis");
 $sql="SELECT ID,FILELEN,SRCPORT,DSTPORT,TIMEINT,VCI1,VPI1,ATM1AALTYPE,SRCID,DSTID FROM data3 WHERE (TIMEINT>=".$timestart." and TIMEINT<= ".$timeend.")";
 if($idflag==1){
 	$sql=$sql." AND (SRCID IN(".$idlist.") OR DSTID IN(".$idlist."))";
 }
 //echo $sql;
-$result =  mysqli_query($con,$sql);
+$result =  mysql_unbuffered_query($con,$sql);
 //echo $result;
 $i=0;
 $res=array();
 
 
-while($row = mysqli_fetch_array($result)){
+while($row = mysql_fetch_array($result)){
 	$res[$i]=array(
 		"ID"=>$row['ID'],
 		"FILELEN"=>$row['FILELEN'],
@@ -50,7 +50,7 @@ $json_string = json_encode($res);
   
 echo $json_string;
 
-mysqli_close($con);
+mysql_close($con);
 
 
 
