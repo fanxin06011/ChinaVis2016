@@ -11,7 +11,8 @@
 		var iplistpre=[];
 		var iplist=[];
 		var ipaddlist=[];
-		var ipdeleted;
+		var ipdeleted=-1;;
+		var delflag=0;//0-del 1-not del
 		var adddelflag=0;//add-0 del-1
 		var iphighlight=[];
 		var numlimit=50;
@@ -31,20 +32,26 @@
 		 });
 		$("#view3back").click(function(){
 		   console.log("back");
+		   redraw(iplistpre);
+		   /*
 		   if(adddelflag==0){
 			   redraw(iplistpre);
 		   }else{
 			   redraw(_.union(iplist,[ipdeleted]));
-		   }
+			   delflag=1;
+		   }*/
 		   
 		 });
 		$("#view3retry").click(function(){
 		   console.log("forth");
+		   redraw(iplist);
+		   /*
 		   if(adddelflag==0){
 			   redraw(iplist);
 		   }else{
 			   redraw(_.without(iplist,ipdeleted));
-		   }
+			   delflag=0;
+		   }*/
 		   
 		 });
 	    
@@ -82,12 +89,15 @@
 			  $("#view3inner p:last").append('<a class="deleteid"><i class="fa fa-remove "></i></a>');
 			  $(".deleteid:last").click(function(){
 				    adddelflag=1;
+
 				    var t0=$(this).parent("p").attr("id");
 				    var t=parseInt(t0.split("p")[1]);
-					//console.log(t);
-					ipdeleted=t;
+					//console.log(iplist);
+					//ipdeleted=t;
 					$(this).parent("p").remove();
-					//iplist=_.without(iplist,t);
+					iplist=_.without(iplist,t);
+					//console.log(iplist);
+					iplistpre=_.without(iplistpre,t);
 					if(_.indexOf(iphighlight,t)>=0){
 						iphighlight=_.without(iphighlight,t);
 						highlight(dd);
@@ -98,7 +108,7 @@
 				  var t0=$(this).attr("id");
 				  var t=parseInt(t0.split("p")[1]);
 
-				  if($(this).css("background-color")=="rgb(255, 192, 203)"){
+				  if(($(this).css("background-color")=="pink")||($(this).css("background-color")=="rgb(255, 192, 203)")){
 					  $(this).css("background-color","white");
 					  iphighlight=_.without(iphighlight,t);
 					  highlight(dd);
@@ -145,6 +155,8 @@
 		view3.onMessage = function(message, data, from){
 			if(message == "addip"){
 				if(from == "view2"){
+					
+					
 					console.log(data);
 					adddelflag=0;
 					iplistpre=iplist;
