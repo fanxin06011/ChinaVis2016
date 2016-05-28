@@ -1,0 +1,25 @@
+.view1axis path,
+.view1axis line{
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.view1axis text {
+    font-family: sans-serif;
+    font-size: 1px;
+}
+
+.port {
+    font-family: sans-serif;
+    font-size: 1px;
+}
+
+.view1text3{
+    font-family: sans-serif;
+    font-size: 1px;
+}
+.view1text2{
+    font-family: sans-serif;
+    font-size: 1px;
+}
