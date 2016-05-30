@@ -30,7 +30,23 @@
 
 
 <body>
-  <div id="view1"></div>
+  <div id="view1">
+      <fieldset id="view1radio">
+          <input type="radio" name="day" value="0" /> ALL
+          <input type="radio" name="day" value="1" /> DAY
+      </fieldset>
+      <fieldset id="view1radio">
+          <input type="radio" name="S" value="0" /> PORT
+          <input type="radio" name="S" value="1" /> SRCIP
+          <input type="radio" name="S" value="2" /> DSTIP
+          <br />
+          <input type="radio" name="S" value="3" /> VCI1
+          <input type="radio" name="S" value="4" /> VPI1
+          <br />
+          <input type="radio" name="S" value="5" /> FILELEN
+          <input type="radio" name="S" value="6" /> ISCRACKED
+      </fieldset>
+  </div>
   <div id="view2"></div>
   <div id="view3">
 	  <input style="display:none" type="file" id="file" onchange="handleFiles(this.files)" ls="" ></input>
