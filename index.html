@@ -32,19 +32,8 @@
 <body>
   <div id="view1">
       <fieldset id="view1radio">
-          <input type="radio" name="day" value="0" /> ALL
-          <input type="radio" name="day" value="1" /> DAY
-      </fieldset>
-      <fieldset id="view1radio">
-          <input type="radio" name="S" value="0" /> PORT
-          <input type="radio" name="S" value="1" /> SRCIP
-          <input type="radio" name="S" value="2" /> DSTIP
-          <br />
-          <input type="radio" name="S" value="3" /> VCI1
-          <input type="radio" name="S" value="4" /> VPI1
-          <br />
-          <input type="radio" name="S" value="5" /> FILELEN
-          <input type="radio" name="S" value="6" /> ISCRACKED
+          <input type="radio" name="day" value="0" id="view1all" checked="checked" /> ALL
+          <input type="radio" name="day" value="1" id="view1day"/> DAY
       </fieldset>
   </div>
   <div id="view2"></div>
@@ -66,7 +55,19 @@
 
   </div>
   
-  <div id="view4"></div>
+  <div id="view4">
+      <fieldset id="view4radio">
+          <input type="radio" name="S" value="0" checked="checked"/> PORT
+          <input type="radio" name="S" value="1" /> SRCIP
+          <input type="radio" name="S" value="2" /> DSTIP
+          <br />
+          <input type="radio" name="S" value="3" /> VCI1
+          <input type="radio" name="S" value="4" /> VPI1
+          <br />
+          <input type="radio" name="S" value="5" /> FILELEN
+          <input type="radio" name="S" value="6" /> ISCRACKED
+      </fieldset>
+  </div>
   
   <div id="view5">
     <p id="date"></p>

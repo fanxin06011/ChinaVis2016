@@ -6,6 +6,8 @@
 		var padding=10;
 		//初始化界面
 		//svg1是Port，svg2是VCI1，svg3是VPI1，svg4是矩阵
+
+
 		var svg1 = d3.select("div#view1")
 			.append("svg")
 			.attr("height",height/4+padding)
@@ -27,7 +29,7 @@
 		vpi1=[64874,9075,4063,3212,3181,2133,1699,1696,1606,1174,543,179,159,153,138,135,100,94,49,42,37];
 		var xScale2 = d3.scale.ordinal()
 			.domain(d3.range(vpi1.length))
-			.rangeRoundBands([0,width],0.05);
+			.rangeRoundBands([0,width-40],0.05);
 		var yScale2 = d3.scale.linear()
 			.domain([0,1000])
 			.range([height/4,0]);
@@ -38,14 +40,14 @@
 
 		svg2.append("g")
 			.attr("class","view1axis")
-			.attr("transform","translate(25,5)")
+			.attr("transform","translate(30,5)")
 			.call(yAxis2);
 //初始化svg3
 		vci1=[64874,55994,9075,5952,3495,3247,2800,2133,1699,1696,1684,1175,1174,883,543,179,159,153,138,135,100,94,49,42,38,37];
 
 		var xScale3 = d3.scale.ordinal()
 			.domain(d3.range(vci1.length))
-			.rangeRoundBands([0,width],0.05);
+			.rangeRoundBands([0,width-40],0.05);
 		var yScale3 = d3.scale.linear()
 			.domain([0,1000])
 			.range([height/4,0]);
@@ -56,14 +58,14 @@
 
 		svg3.append("g")
 			.attr("class","view1axis")
-			.attr("transform","translate(25,5)")
+			.attr("transform","translate(30,5)")
 			.call(yAxis3);
 //初始化svg1
 		var port = [445,389,135,21,139,443,88,80,53,20,25,110];
 
 		var xScale1 = d3.scale.ordinal()
 			.domain(d3.range(port.length))
-			.rangeRoundBands([0,width],0.05);
+			.rangeRoundBands([0,width-40],0.05);
 		var yScale1 = d3.scale.linear()
 			.domain([0,1000])
 			.range([height/4,0]);
@@ -74,13 +76,14 @@
 
 		svg1.append("g")
 			.attr("class","view1axis")
-			.attr("transform","translate(25,5)")
+			.attr("transform","translate(30,5)")
 			.call(yAxis1);
 
 		//day_or_all表示是视图5选中这一天的数据还是所有数据，0代表所有
 //data_type表示应用层1、网络层2、链路层3三个方面的选项
 		var day_or_all = 1;
 		var data_type = 1;
+		var temp_day = 1;
 		var color = d3.scale.category10();
 //定义数据变量
 		var dport,sport;
@@ -88,6 +91,16 @@
 		var show_m;
 		var s1,s1_i=-1;
 		var s2 = [0,0];
+		$("#view1all").click(function(){
+			if(document.getElementById("view1all").checked){
+				day_or_all=0;
+				change_day(day_or_all);
+			}});
+		$("#view1day").click(function(){
+			if(document.getElementById("view1day").checked){
+				day_or_all=temp_day;
+				change_day(day_or_all);
+			}});
 //读入数据
 		d3.csv("data/view1/dstportall.csv", function(data){
 			dport = data;
@@ -147,7 +160,7 @@
 				.attr("stroke","green")
 				.attr("stroke-width",2)
 				.attr("class","select")
-				.attr("transform","translate(25,5)");
+				.attr("transform","translate(30,5)");
 
 			svg1.selectAll(".dport")
 				.data(show_d)
@@ -159,7 +172,7 @@
 				.attr("width",(width-40)/show_d.length/2)
 				.attr("height",function(d,i){return height/4-yScale1(d);})
 				.attr("fill",color(1))
-				.attr("transform","translate(25,5)")
+				.attr("transform","translate(30,5)")
 				.on("click", function(d,i){
 					if(s1.attr("x")==xScale1(i)-1){
 						s1_i = -1;
@@ -179,6 +192,7 @@
 							.attr("x",xScale1(i)-1)
 							.attr("y",yScale1(show_d[i]+show_s[i]));
 						console.log(port[i]);
+						Observer.fireEvent("port", port[i], "view1");
 					}
 
 				});
@@ -192,7 +206,7 @@
 				.attr("width",(width-40)/show_s.length/2)
 				.attr("height",function(d,i){return height/4-yScale1(d);})
 				.attr("fill",color(2))
-				.attr("transform","translate(25,5)")
+				.attr("transform","translate(30,5)")
 				.on("click", function(d,i){
 					if(s1.attr("x")==xScale1(i)-1){
 						console.log("cancel");
@@ -212,6 +226,7 @@
 							.attr("width",(width-40)/show_s.length/2+2)
 							.attr("x",xScale1(i)-1)
 							.attr("y",yScale1(show_d[i]+show_s[i]));
+						Observer.fireEvent("port", port[i], "view1");
 					}
 				});
 			svg1.selectAll(".port")
@@ -222,7 +237,7 @@
 				.attr("x",function(d,i){return xScale1(i);})
 				.attr("y",height/4+5)
 				.text(function(d,i){return d;})
-				.attr("transform","translate(25,5)");
+				.attr("transform","translate(30,5)");
 
 			//显示VCI和VPI
 
@@ -247,7 +262,7 @@
 					.attr("y",function(d,i){return yScale3(d);})
 					.attr("fill",color(j))
 					.attr("class","rect3_"+j)
-					.attr("transform","translate(25,5)")
+					.attr("transform","translate(30,5)")
 					.on("click",function(d,i){
 						if(s2[0]==3&&s2[1]==i){
 							console.log("cancel");
@@ -288,7 +303,7 @@
 				.attr("y",function(d,i){
 					return height/4+5;
 				})
-				.attr("transform","translate(25,5)")
+				.attr("transform","translate(30,5)")
 				.attr("class","view1text3")
 				.text(function(d,i){
 					if(c[5][i+1]==0){
@@ -318,7 +333,7 @@
 					.attr("y",function(d,i){return yScale2(d);})
 					.attr("fill",color(j))
 					.attr("class","rect2_"+j)
-					.attr("transform","translate(25,5)")
+					.attr("transform","translate(30,5)")
 					.on("click",function(d,i){
 						if(s2[0]==2&&s2[1]==i){
 							console.log("cancel");
@@ -359,7 +374,7 @@
 				.attr("y",function(d,i){
 					return height/4+5;
 				})
-				.attr("transform","translate(25,5)")
+				.attr("transform","translate(30,5)")
 				.attr("class","view1text2")
 				.text(function(d,i){
 					if(p[5][i+1]==0){
@@ -490,6 +505,7 @@
 							.attr("x",xScale1(i)-1)
 							.attr("y",yScale1(show_d[i]+show_s[i]));
 						console.log(port[i]);
+						Observer.fireEvent("port", port[i], "view1");
 					}
 
 				})
@@ -518,6 +534,7 @@
 							.attr("width",(width-40)/show_d.length/2+2)
 							.attr("x",xScale1(i)-1)
 							.attr("y",yScale1(show_d[i]+show_s[i]));
+						Observer.fireEvent("port", port[i], "view1");
 					}
 				})
 				.transition()
@@ -551,11 +568,12 @@
 						//console.log(d);
 						if(d>0&&d<54)
 							change_day(d);
+					}else{
+						temp_day = day_or_all;
 					}
 
 				}
 			}
-
 		}
 		Observer.addView(view1);
 		return view1;

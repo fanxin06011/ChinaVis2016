@@ -76,7 +76,25 @@
 						redraw_m();
 					});
 				}
+			}else if(message == "port"){
+				if(from == "view1"){
+					d3.text("data/view4/dst/p"+data+".csv",function(d1){
+						var dst_temp = d3.csv.parseRows(d1);
+						d3.text("data/view4/src/p"+data+".csv",function(d2){
+							var src_temp = d3.csv.parseRows(d2);
+							//console.log("haha")
+							for(var i=0;i<53;i++){
+								for(var j=0;j<24;j++){
+									src_temp[i][j] = src_temp[i][j]+dst_temp[i][j];
+								}
+							}
+							show_m = src_temp;
+							redraw_m();
+						});
+					});
+				}
 			}
+
 
 		};
 		Observer.addView(view4);
