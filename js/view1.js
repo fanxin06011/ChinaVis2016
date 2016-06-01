@@ -5,7 +5,7 @@
 		var height=$("div#view1").height();
 		var padding=10;
 		//初始化界面
-		//svg1是Port，svg2是VCI1，svg3是VPI1，svg4是矩阵
+		//svg1是Port，svg2是VCI1，svg3是VPI1
 
 
 		var svg1 = d3.select("div#view1")
@@ -13,16 +13,17 @@
 			.attr("height",height/4+padding)
 			.attr("width",width-padding)
 			.attr("class","p1");
-		var svg2 = d3.select("div#view1")
-			.append("svg")
-			.attr("height",height/4+padding)
-			.attr("width",width-padding)
-			.attr("class","p2");
 		var svg3 = d3.select("div#view1")
 			.append("svg")
 			.attr("height",height/4+padding)
 			.attr("width",width-padding)
 			.attr("class","p3");
+		var svg2 = d3.select("div#view1")
+			.append("svg")
+			.attr("height",height/4+padding)
+			.attr("width",width-padding)
+			.attr("class","p2");
+
 
 		//初始化svg2
 		atm=[15,14,6,5,2,1];
@@ -81,8 +82,8 @@
 
 		//day_or_all表示是视图5选中这一天的数据还是所有数据，0代表所有
 //data_type表示应用层1、网络层2、链路层3三个方面的选项
-		var day_or_all = 1;
-		var data_type = 1;
+		var day_or_all = 0;
+
 		var temp_day = 1;
 		var color = d3.scale.category10();
 //定义数据变量
@@ -93,13 +94,12 @@
 		var s2 = [0,0];
 		$("#view1all").click(function(){
 			if(document.getElementById("view1all").checked){
-				day_or_all=0;
-				change_day(day_or_all);
+				temp_day = day_or_all;
+				change_day(0);
 			}});
 		$("#view1day").click(function(){
 			if(document.getElementById("view1day").checked){
-				day_or_all=temp_day;
-				change_day(day_or_all);
+				change_day(temp_day);
 			}});
 //读入数据
 		d3.csv("data/view1/dstportall.csv", function(data){
@@ -111,7 +111,7 @@
 
 		});
 
-		d3.text("data/view1/day/VCI1/d1.csv",function(data){
+		d3.text("data/view1/day/VCI1/d0.csv",function(data){
 			c = d3.csv.parseRows(data);
 			for(var i=0;i<27;i++){
 				for(var j=0;j<6;j++){
@@ -126,7 +126,7 @@
 			draw_c();
 		});
 
-		d3.text("data/view1/day/VPI1/d1.csv", function(data){
+		d3.text("data/view1/day/VPI1/d0.csv", function(data){
 			p = d3.csv.parseRows(data);
 			for(var i=0;i<22;i++){
 				for(var j = 0; j<6; j++){
