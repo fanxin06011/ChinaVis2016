@@ -48,7 +48,11 @@
 					.attr("height", pix-1)
 					.attr("class", "h"+i+"d"+j)
 					.attr("fill", "white")
-					.attr("transform", "translate(10,10)");
+					.attr("transform", "translate(10,10)")
+					.on("click",function(d){
+						var s = d3.select(this).attr("class");
+						Observer.fireEvent("matrix_selected",s, "view4");
+					});
 			}
 		}
 

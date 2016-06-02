@@ -560,18 +560,18 @@
 		view1.onMessage = function(message, data, from){
 			if(message == "calendar"){
 				if(from == "view5"){
-					if(day_or_all!=0){
-						var a = data.split("/");
-						var month = +a[1];
-						var day = +a[2];
-						var d = day-21+(month-7)*31;
-						//console.log(d);
-						if(d>0&&d<54)
+					var a = data.split("/");
+					var month = +a[1];
+					var day = +a[2];
+					var d = day-21+(month-7)*31;
+					console.log(d);
+					if(d>0&&d<54){
+						if(day_or_all!=0){
 							change_day(d);
-					}else{
-						temp_day = day_or_all;
+						}else{
+							temp_day = d;
+						}
 					}
-
 				}
 			}
 		}

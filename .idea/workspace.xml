@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="474616bc-902a-4165-87b1-f0b7eeaba04a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/view1/day/VPI1/d28.csv" afterPath="$PROJECT_DIR$/data/view1/day/VPI1/d28.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/view1.js" afterPath="$PROJECT_DIR$/js/view1.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/view4.js" afterPath="$PROJECT_DIR$/js/view4.js" />
     </list>
@@ -25,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="view4.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="view4.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/view4.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="143" column="17" selection-start-line="143" selection-start-column="17" selection-end-line="143" selection-end-column="17" />
+            <state vertical-scroll-proportion="1.6188579">
+              <caret line="53" column="63" selection-start-line="53" selection-start-column="63" selection-end-line="53" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -38,7 +37,7 @@
       <file leaf-file-name="view4.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/view4.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.75">
+            <state vertical-scroll-proportion="0.0">
               <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding />
             </state>
@@ -48,8 +47,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.3125">
-              <caret line="59" column="63" selection-start-line="59" selection-start-column="63" selection-end-line="59" selection-end-column="63" />
+            <state vertical-scroll-proportion="-11.5">
+              <caret line="59" column="75" selection-start-line="59" selection-start-column="75" selection-end-line="59" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -88,18 +87,18 @@
       <file leaf-file-name="view1.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/view1.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.71875">
+            <state vertical-scroll-proportion="-8.625">
               <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="view1.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="view1.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/view1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3054449">
-              <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="559" column="55" selection-start-line="559" selection-start-column="55" selection-end-line="559" selection-end-column="55" />
               <folding>
                 <element signature="e#2639#2754#0" expanded="false" />
                 <element signature="e#2811#3045#0" expanded="false" />
@@ -107,9 +106,11 @@
                 <element signature="e#3362#6239#0" expanded="false" />
                 <element signature="e#6260#8189#0" expanded="false" />
                 <element signature="e#8210#10139#0" expanded="false" />
+                <element signature="e#10167#10849#0" expanded="false" />
                 <element signature="e#10872#11493#0" expanded="false" />
                 <element signature="e#11516#12137#0" expanded="false" />
                 <element signature="e#12158#14298#0" expanded="false" />
+                <element signature="e#14464#14782#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -146,8 +147,8 @@
         <option value="$PROJECT_DIR$/css/view1.css" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/css/view4.css" />
-        <option value="$PROJECT_DIR$/js/view4.js" />
         <option value="$PROJECT_DIR$/js/view1.js" />
+        <option value="$PROJECT_DIR$/js/view4.js" />
       </list>
     </option>
   </component>
@@ -188,7 +189,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -237,6 +237,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -377,9 +378,11 @@
             <element signature="e#3362#6239#0" expanded="false" />
             <element signature="e#6260#8189#0" expanded="false" />
             <element signature="e#8210#10139#0" expanded="false" />
+            <element signature="e#10167#10849#0" expanded="false" />
             <element signature="e#10872#11493#0" expanded="false" />
             <element signature="e#11516#12137#0" expanded="false" />
             <element signature="e#12158#14298#0" expanded="false" />
+            <element signature="e#14464#14782#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -458,9 +461,11 @@
             <element signature="e#3362#6239#0" expanded="false" />
             <element signature="e#6260#8189#0" expanded="false" />
             <element signature="e#8210#10139#0" expanded="false" />
+            <element signature="e#10167#10849#0" expanded="false" />
             <element signature="e#10872#11493#0" expanded="false" />
             <element signature="e#11516#12137#0" expanded="false" />
             <element signature="e#12158#14298#0" expanded="false" />
+            <element signature="e#14464#14782#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -538,9 +543,11 @@
             <element signature="e#3362#6239#0" expanded="false" />
             <element signature="e#6260#8189#0" expanded="false" />
             <element signature="e#8210#10139#0" expanded="false" />
+            <element signature="e#10167#10849#0" expanded="false" />
             <element signature="e#10872#11493#0" expanded="false" />
             <element signature="e#11516#12137#0" expanded="false" />
             <element signature="e#12158#14298#0" expanded="false" />
+            <element signature="e#14464#14782#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -594,9 +601,11 @@
             <element signature="e#3362#6239#0" expanded="false" />
             <element signature="e#6260#8189#0" expanded="false" />
             <element signature="e#8210#10139#0" expanded="false" />
+            <element signature="e#10167#10849#0" expanded="false" />
             <element signature="e#10872#11493#0" expanded="false" />
             <element signature="e#11516#12137#0" expanded="false" />
             <element signature="e#12158#14298#0" expanded="false" />
+            <element signature="e#14464#14782#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -642,9 +651,11 @@
             <element signature="e#3362#6239#0" expanded="false" />
             <element signature="e#6260#8189#0" expanded="false" />
             <element signature="e#8210#10139#0" expanded="false" />
+            <element signature="e#10167#10849#0" expanded="false" />
             <element signature="e#10872#11493#0" expanded="false" />
             <element signature="e#11516#12137#0" expanded="false" />
             <element signature="e#12158#14298#0" expanded="false" />
+            <element signature="e#14464#14782#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -745,16 +756,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/css/view4.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.75">
+        <state vertical-scroll-proportion="0.0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.3125">
-          <caret line="59" column="63" selection-start-line="59" selection-start-column="63" selection-end-line="59" selection-end-column="63" />
           <folding />
         </state>
       </provider>
@@ -767,17 +770,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/view4.js">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="143" column="17" selection-start-line="143" selection-start-column="17" selection-end-line="143" selection-end-column="17" />
+        <state vertical-scroll-proportion="-11.5">
+          <caret line="59" column="75" selection-start-line="59" selection-start-column="75" selection-end-line="59" selection-end-column="75" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/view1.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.71875">
+        <state vertical-scroll-proportion="-8.625">
           <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
           <folding />
         </state>
@@ -785,8 +788,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/view1.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3054449">
-          <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="559" column="55" selection-start-line="559" selection-start-column="55" selection-end-line="559" selection-end-column="55" />
           <folding>
             <element signature="e#2639#2754#0" expanded="false" />
             <element signature="e#2811#3045#0" expanded="false" />
@@ -794,10 +797,20 @@
             <element signature="e#3362#6239#0" expanded="false" />
             <element signature="e#6260#8189#0" expanded="false" />
             <element signature="e#8210#10139#0" expanded="false" />
+            <element signature="e#10167#10849#0" expanded="false" />
             <element signature="e#10872#11493#0" expanded="false" />
             <element signature="e#11516#12137#0" expanded="false" />
             <element signature="e#12158#14298#0" expanded="false" />
+            <element signature="e#14464#14782#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/view4.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.6188579">
+          <caret line="53" column="63" selection-start-line="53" selection-start-column="63" selection-end-line="53" selection-end-column="63" />
+          <folding />
         </state>
       </provider>
     </entry>
