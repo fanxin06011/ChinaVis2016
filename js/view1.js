@@ -244,7 +244,7 @@
 		}
 
 		function draw_c(){
-			yScale3.domain([0,d3.max(c,function(d,i){return d3.max(d);})]);
+			yScale3.domain([0,d3.max(c,function(d,i){return d3.max(d,function(d,i){if(i==0)return 0;else return d;});})]);
 			svg3.select("g.view1axis").call(yAxis3);
 			for(var j=5;j>=0;j--){
 				var temp = [];
@@ -315,7 +315,7 @@
 		}
 
 		function draw_p(){
-			yScale2.domain([0,d3.max(p,function(d,i){return d3.max(d);})]);
+			yScale2.domain([0,d3.max(p,function(d,i){return d3.max(d,function(d,i){if(i==0)return 0;else return d;});})]);
 			svg2.select("g.view1axis").call(yAxis2);
 			for(var j=5;j>=0;j--){
 				var temp = [];
@@ -447,7 +447,7 @@
 		}
 
 		function redraw_p(){
-			yScale2.domain([0,d3.max(p,function(d,i){return d3.max(d);})]);
+			yScale2.domain([0,d3.max(p,function(d,i){return d3.max(d,function(d,i){if(i==0) return 0;else return d;});})]);
 			svg2.select("g.view1axis").call(yAxis2);
 			for(var j=5;j>=0;j--){
 				var temp = [];
