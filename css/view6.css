@@ -1,53 +1,53 @@
-.foreground path {
+#view6 .foreground path {
   fill: none;
   //stroke-opacity: 0.3;
   stroke-width: 0.5px;
 }
-.lightline path {
+#view6 .lightline path {
   fill: none;
   stroke-opacity: 0.9;
   stroke-width: 1.5px;
 }
-.highlightline path {
+#view6 .highlightline path {
   fill: none;
   stroke-opacity: 0.9;
   stroke-width: 1.5px;
 }
-.legend {
+#view6 .legend {
   font-size: 18px;
   font-style: oblique;
 }
 
-.legend line {
+#view6 .legend line {
   stroke-width: 4px;
 }
 
 
-.brush .extent {
+#view6 .brush .extent {
   fill-opacity: .3;
   stroke: #fff;
   shape-rendering: crispEdges;
 }
 
-.axis line, .axis path {
+#view6 .axis line,#view6 .axis path {
   fill: none;
   stroke: #000;
   stroke-width: 1;
   shape-rendering: crispEdges;
 }
 
-.axis text {
+#view6 .axis text {
   font-family: sans-serif;
   font-size: 11px; 
   text-shadow: 0 1px 0 #fff;
 }
-.axisx path,.axisx line {
+#view6 .axisx path,#view6 .axisx line {
   fill: none;
   stroke: white;
   stroke-width: 1;
   shape-rendering: crispEdges;
 }
-.axisx text {
+#view6 .axisx text {
   font-family: sans-serif;
   font-size: 11px; 
   color:red;
