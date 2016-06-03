@@ -606,22 +606,7 @@ function gaoliang(n,m)
 		 });
 
 		 draw(1);
-		 view2.onMessage = function(message, data, from){
-			if(message == "calendar"){
-				console.log("222");
-				if(from == "view5")
-				{
-					console.log(222);
-					var k=parseInt(data[6]);
-					var k1=parseInt(data.slice(8,10));
-					console.log(k+"and"+k1);
-					var w=(k-7)*31+k1-22;
-                    draw(w+1);
 
-
-				}
-			}
-		}
         var y1=0;
         var y2=0;
         var datavp0;
@@ -642,6 +627,20 @@ function gaoliang(n,m)
 								return compute(colorlinear(repeat[i]));
 							});
 							}
+
+				}
+			}
+			if(message == "calendar"){
+				console.log("222");
+				if(from == "view5")
+				{
+					console.log(222);
+					var k=parseInt(data[6]);
+					var k1=parseInt(data.slice(8,10));
+					console.log(k+"and"+k1);
+					var w=(k-7)*31+k1-22;
+                    draw(w+1);
+
 
 				}
 			}
