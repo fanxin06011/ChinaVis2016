@@ -18,7 +18,8 @@
   width:39%;
   top: 0%;
   height: 65%;
-  background-color: black;
+  //background-color: black;
+  border:1px solid black;
 
 }
 
