@@ -401,13 +401,13 @@
 		}
 		
 		view6.onMessage = function(message, data, from){
-			if(message == "choosetime"){
+			/*if(message == "choosetime"){
 				if(from == "view4"){
 					console.log(data);
 					timeselected=data;
 					choosedata();
 				}
-			}
+			}*/
 			if(message == "matrix_selected"){
 				if(from == "view4"){
 					console.log(data);
@@ -417,6 +417,8 @@
 					var hour=parseInt(dtmp[0].split("h")[1]);
 					console.log(day);
 					console.log(hour);
+					timeselected=day*86400+hour*3600;
+					choosedata();
 				}
 			}
 			if(message == "highlight"){
