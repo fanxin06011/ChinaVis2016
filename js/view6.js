@@ -408,6 +408,17 @@
 					choosedata();
 				}
 			}
+			if(message == "matrix_selected"){
+				if(from == "view4"){
+					console.log(data);
+
+					var dtmp=data.split("d");
+					var day=parseInt(dtmp[1]);
+					var hour=parseInt(dtmp[0].split("h")[1]);
+					console.log(day);
+					console.log(hour);
+				}
+			}
 			if(message == "highlight"){
 				if(from=="view3"){
 					console.log("highlight"+data);
