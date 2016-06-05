@@ -8,7 +8,7 @@
 		var show_m_temp=[];
 		var selected;
 		var data_type = 0;
-		var type_port = null, type_c = null, type_p = null, type_f = null, type_i = null;
+		var type_port = null, type_c = null, type_p = null, type_f = null, type_i = null,type_ip = null;
 		console.log(pix);
 		d3.selectAll(".view4s")
 			.on("click", function(d, i){
@@ -141,12 +141,33 @@
 					show_m = d3.csv.parseRows(d);
 					redraw_m();
 				});
+			}else if(data_type==7){
+				getdata(type_ip,0);
+			}else if(data_type==8){
+				getdata(type_ip,1);
 			}
+
 		}
 
 
 		//Observer.fireEvent("addip", [1,29736,4,5], "view2");
+		function getdata(d,sd){
+			var id=d;//被选中的ip的id号
+			var flag=sd;//0-作为srcip 1-作为dstip
+			var url="ipdata.php";
+			url=url+"?ipselected="+id+"&SrcOrDst="+flag;
 
+			$.ajax({
+				url:url,
+				success:function(data){
+					show_m=data;
+					redraw_m();
+				},
+				error:function(xhr){
+					console.log("error");
+				}
+			})
+		}
 
 		view4.onMessage = function(message, data, from){
 			if(message=="VCI1"){
@@ -170,9 +191,12 @@
 						change_type(data_type);
 					}
 				}
+			}else if(message=="addip"){
+				if(from=="view2"){
+					type_ip = data;
+					change_type(data_type);
+				}
 			}
-
-
 		};
 		Observer.addView(view4);
 		return view4;
