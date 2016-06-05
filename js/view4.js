@@ -5,6 +5,8 @@
 		var height = $("div#view4").height();
 		var pix = d3.min([Math.floor((width)/24), Math.floor(height/53)]);
 		var show_m;
+		var show_m_temp=[];
+		var selected;
 		var data_type = 0;
 		var type_port = null, type_c = null, type_p = null, type_f = null, type_i = null;
 		console.log(pix);
@@ -17,45 +19,51 @@
 
 		var svg4 = d3.select("div#view4")
 			.append("svg")
-			.attr("height", 53*pix+10)
-			.attr("width", 24*pix+10)
+			.attr("height", 53*pix)
+			.attr("width", 24*pix)
 			.attr("class", "m");
-		for(var i = 0; i<24; i++){
-			svg4.append("text")
-				.attr("x", i*pix)
-				.attr("y", 10)
-				.attr("class", "view4text")
-				.attr("transform", "translate(10,-1)")
-				.text(i);
-		}
-		for(var j = 1; j<54; j++){
-			svg4.append("text")
-				.attr("x", 0)
-				.attr("y", (j-1)*pix)
-				.attr("class", "view4text")
-				.attr("transform", "translate(0,15)")
-				.text(j);
-		}
 		//初始化矩阵视图
+		for(var i = 1; i<54; i++){
+			show_m_temp.push([]);
+			for(var j = 0; j<24; j++){
+				show_m_temp[show_m_temp.length-1].push(0);
+			}
+		}
 		for(var i = 0; i<24; i++){
 			//console.log(i);
 			for(var j = 1; j<54; j++){
 				//console.log(j);
-				svg4.append("rect")
+				var s = "week:"+Math.floor(j/7+1)+"\nday:"+j+"\nhour:"+i;
+				var g = svg4.append("g");
+				g.append("title")
+					.text(s)
+					.attr("class", "th"+i+"d"+j);
+				g.append("rect")
 					.attr("x", i*pix)
 					.attr("y", (j-1)*pix)
 					.attr("width", pix-1)
 					.attr("height", pix-1)
 					.attr("class", "h"+i+"d"+j)
 					.attr("fill", "white")
-					.attr("transform", "translate(10,10)")
 					.on("click",function(d){
 						var s = d3.select(this).attr("class");
-						Observer.fireEvent("matrix_selected",s, "view4");
+						if(s==selected){
+							d3.select("."+s)
+								.attr("stroke-width",0);
+							Observer.fireEvent("matrix_selected", "cancel", "view4");
+						}else{
+							d3.select("."+selected)
+								.attr("stroke-width",0);
+							selected = s;
+							d3.select(this)
+								.attr("stroke","green")
+								.attr("stroke-width",2);
+							Observer.fireEvent("matrix_selected", s, "view4");
+						}
 					});
 			}
 		}
-
+//console.log(show_m_temp);
 		function redraw_m(){
 			var mScale = d3.scale.linear()
 				.domain([0, d3.max(show_m, function(d, i){
@@ -68,6 +76,10 @@
 						.attr("fill", function(d){
 							return "rgba(255,0,0,"+mScale(show_m[j-1][i])+")";
 						});
+					var s = "week:"+Math.floor(j/7+1)+"\nday:"+j+"\nhour:"+i;
+					s = s + "\n"+show_m[j-1][i];
+					svg4.selectAll(".th"+i+"d"+j)
+						.text(s);
 				}
 			}
 		}
@@ -86,6 +98,7 @@
 								}
 							}
 							show_m = src_temp;
+							//console.log(show_m)
 							redraw_m();
 						});
 					});
@@ -143,13 +156,23 @@
 				}
 			}else if(message=="VPI1"){
 				if(from=="view1"){
-					type_p = data;
-					change_type(data_type);
+					//if(data=="cancel"){
+					//	show_m = show_m_temp;
+					//	redraw_m();
+					//}else{
+						type_p = data;
+						change_type(data_type);
+					//}
 				}
 			}else if(message=="port"){
 				if(from=="view1"){
-					type_port = data;
-					change_type(data_type);
+					//if(data=="cancel"){
+					//	show_m = show_m_temp;
+					//	redraw_m();
+					//}else{
+						type_port = data;
+						change_type(data_type);
+					//}
 				}
 			}
 

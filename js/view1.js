@@ -4,20 +4,32 @@
 		var width=$("div#view1").width();
 		var height=$("div#view1").height();
 		var padding=10;
+		height = height-40;
 		//初始化界面
 		//svg1是Port，svg2是VCI1，svg3是VPI1
 
-
+		var l1 = d3.select("div#view1")
+			.append("svg")
+			.attr("width",width-padding)
+			.attr("height",10);
 		var svg1 = d3.select("div#view1")
 			.append("svg")
 			.attr("height",height/4+padding)
 			.attr("width",width-padding)
 			.attr("class","p1");
+		var l3 = d3.select("div#view1")
+			.append("svg")
+			.attr("width",width-padding)
+			.attr("height",10);
 		var svg3 = d3.select("div#view1")
 			.append("svg")
 			.attr("height",height/4+padding)
 			.attr("width",width-padding)
 			.attr("class","p3");
+		var l2 = d3.select("div#view1")
+			.append("svg")
+			.attr("width",width-padding)
+			.attr("height",10);
 		var svg2 = d3.select("div#view1")
 			.append("svg")
 			.attr("height",height/4+padding)
@@ -85,7 +97,10 @@
 		var day_or_all = 0;
 
 		var temp_day = 1;
-		var color = d3.scale.category10();
+		//var color = d3.scale.category10();
+		var color1 = ['#e377c2','#17becf'];
+		var color2 = ['#8c564b','#9467bd','rgb(215,63,42)','rgb(76,160,46)','rgb(241,125,48)','rgb(36,120,180)'];
+		//var color3 = ['rgb(241,125,48)','rgb(36,120,180)','#9467bd','#e377c2','#17becf','#8c564b'];
 //定义数据变量
 		var dport,sport;
 		var c,p;
@@ -102,6 +117,59 @@
 				change_day(temp_day);
 			}});
 //读入数据
+		l1.selectAll(".l1")
+			.data(color1)
+			.enter()
+			.append("rect")
+			.attr("x",function(d,i){return 50*i+50;})
+			.attr("y",0)
+			.attr("width",8)
+			.attr("height",8)
+			.attr("fill",function(d,i){return color1[i];});
+		l1.selectAll(".lt1")
+			.data(color1)
+			.enter()
+			.append("text")
+			.attr("x",function(d,i){return 50*i+60;})
+			.attr("y",8)
+			.attr("class","lt1")
+			.text(function(d,i){if(i==0)return "dist";else return "src";});
+		l1.append("text")
+			.attr("x",5)
+			.attr("y",8)
+			.attr("class","lt1")
+			.text("PORT:");
+		l3.selectAll(".l3")
+			.data(color2)
+			.enter()
+			.append("rect")
+			.attr("x",function(d,i){
+				return 22*i+31;
+			})
+			.attr("y",0)
+			.attr("width",8)
+			.attr("height",8)
+			.attr("fill",function(d,i){return color2[i];});
+		l3.selectAll(".lt3")
+			.data(color2)
+			.enter()
+			.append("text")
+			.attr("x",function(d,i){
+				return 22*i+41;
+			})
+			.attr("y",8)
+			.attr("class","lt3")
+			.text(function(d,i){return atm[i];});
+		l3.append("text")
+			.attr("x",5)
+			.attr("y",8)
+			.attr("class","lt2")
+			.text("VCI1:");
+		l2.append("text")
+			.attr("x",5)
+			.attr("y",8)
+			.attr("class","lt3")
+			.text("VPI1:");
 		d3.csv("data/view1/dstportall.csv", function(data){
 			dport = data;
 			d3.csv("data/view1/srcportall.csv", function(data){
@@ -161,17 +229,22 @@
 				.attr("stroke-width",2)
 				.attr("class","select")
 				.attr("transform","translate(30,5)");
-
-			svg1.selectAll(".dport")
+			var pg = svg1.selectAll(".dportg")
 				.data(show_d)
 				.enter()
-				.append("rect")
+				.append("g");
+			pg.append("title")
+				.text(function(d,i){
+					var s = "dist_port:"+port[i]+"\n"+d;
+					return s;
+				});
+			pg.append("rect")
 				.attr("class","dport")
 				.attr("x",function(d,i){return xScale1(i);})
 				.attr("y",function(d,i){return yScale1(d);})
 				.attr("width",(width-40)/show_d.length/2)
 				.attr("height",function(d,i){return height/4-yScale1(d);})
-				.attr("fill",color(1))
+				.attr("fill",color1[0])
 				.attr("transform","translate(30,5)")
 				.on("click", function(d,i){
 					if(s1.attr("x")==xScale1(i)-1){
@@ -183,6 +256,7 @@
 							.attr("x",0)
 							.attr("y",height/4);
 						console.log("cancel");
+						Observer.fireEvent("port","cancel", "view1");
 					}else{
 						s1_i = i;
 						s1.transition()
@@ -196,16 +270,22 @@
 					}
 
 				});
-			svg1.selectAll(".sport")
+			var sg = svg1.selectAll(".sportg")
 				.data(show_s)
 				.enter()
-				.append("rect")
+				.append("g");
+			sg.append("title")
+				.text(function(d,i){
+					var s = "src_port:"+port[i]+"\n"+d;
+					return s;
+				});
+			sg.append("rect")
 				.attr("class","sport")
 				.attr("x",function(d,i){return xScale1(i);})
 				.attr("y",function(d,i){return yScale1(d+show_d[i]);})
 				.attr("width",(width-40)/show_s.length/2)
 				.attr("height",function(d,i){return height/4-yScale1(d);})
-				.attr("fill",color(2))
+				.attr("fill",color1[1])
 				.attr("transform","translate(30,5)")
 				.on("click", function(d,i){
 					if(s1.attr("x")==xScale1(i)-1){
@@ -217,6 +297,7 @@
 							.attr("width",0)
 							.attr("x",0)
 							.attr("y",height/4);
+						Observer.fireEvent("port","cancel", "view1");
 					}else{
 						s1_i = i;
 						console.log(port[i]);
@@ -237,7 +318,30 @@
 				.attr("x",function(d,i){return xScale1(i);})
 				.attr("y",height/4+5)
 				.text(function(d,i){return d;})
-				.attr("transform","translate(30,5)");
+				.attr("transform","translate(30,5)")
+				.on("click", function(d,i){
+					if(s1.attr("x")==xScale1(i)-1){
+						console.log("cancel");
+						s1_i = -1;
+						s1.transition()
+							.duration(700)
+							.attr("height",0)
+							.attr("width",0)
+							.attr("x",0)
+							.attr("y",height/4);
+						Observer.fireEvent("port","cancel", "view1");
+					}else{
+						s1_i = i;
+						console.log(port[i]);
+						s1.transition()
+							.duration(700)
+							.attr("height",height/2-yScale1(show_d[i])-yScale1(show_s[i]))
+							.attr("width",(width-40)/show_s.length/2+2)
+							.attr("x",xScale1(i)-1)
+							.attr("y",yScale1(show_d[i]+show_s[i]));
+						Observer.fireEvent("port", port[i], "view1");
+					}
+				});
 
 			//显示VCI和VPI
 
@@ -252,15 +356,20 @@
 					temp.push(c[j][i]);
 				}
 				//console.log(temp);
-				svg3.selectAll('.rect3_'+j)
+				var cg = svg3.selectAll('.rect3_'+j+'g')
 					.data(temp)
 					.enter()
-					.append("rect")
+					.append("g");
+				cg.append("title")
+					.text(function(d,n){
+						return "VCI1:"+vci1[n]+"\nATM:"+atm[j]+"\n"+d;
+					});
+				cg.append("rect")
 					.attr("width",(width-40)/temp.length/2)
 					.attr("height",function(d,i){return height/4-yScale3(d);})
 					.attr("x",function(d,i){return xScale3(i);})
 					.attr("y",function(d,i){return yScale3(d);})
-					.attr("fill",color(j))
+					.attr("fill",color2[j])
 					.attr("class","rect3_"+j)
 					.attr("transform","translate(30,5)")
 					.on("click",function(d,i){
@@ -270,6 +379,7 @@
 							svg3.selectAll('.rect3_5')
 								.attr("stroke","rgba(255,255,255,0)")
 								.attr("stroke-width",0);
+							Observer.fireEvent("VCI1", "cancel", "view1");
 						}else{
 							/*
 							d3.text("data/view1/day/VCI1/d"+vci1[i]+".csv",function(data){
@@ -311,6 +421,38 @@
 					}else{
 						return i;
 					}
+				})
+				.on("click",function(d,i){
+					if(s2[0]==3&&s2[1]==i){
+						console.log("cancel");
+						s2 = [0,0];
+						svg3.selectAll('.rect3_5')
+							.attr("stroke","rgba(255,255,255,0)")
+							.attr("stroke-width",0);
+						Observer.fireEvent("VCI1", "cancel", "view1");
+					}else{
+						/*
+						 d3.text("data/view1/day/VCI1/d"+vci1[i]+".csv",function(data){
+						 show_m = d3.csv.parseRows(data);
+						 redraw_m();
+						 });
+						 */
+						Observer.fireEvent("VCI1", vci1[i], "view1");
+						s2 = [3,i];
+						console.log("vci1:"+vci1[i]);
+						svg3.selectAll('.rect3_5')
+							.attr("stroke",function(d,n){
+								if(n==i) return "black";
+								else return d3.select(this).attr("fill");
+							})
+							.attr("stroke-width",function(d,n){
+								if(n==i) return 2;
+								else return 0;
+							});
+						svg2.selectAll('.rect2_5')
+							.attr("stroke","rgba(255,255,255,0)")
+							.attr("stroke-width",0);
+					}
 				});
 		}
 
@@ -322,16 +464,20 @@
 				for(var i=1;i<22;i++){
 					temp.push(p[j][i]);
 				}
-				//console.log(temp);
-				svg2.selectAll('.rect2_'+j)
+				var pg = svg2.selectAll('.rect2_'+j+'g')
 					.data(temp)
 					.enter()
-					.append("rect")
+					.append("g");
+				pg.append("title")
+					.text(function(d,n){
+						return "VPI1:"+vpi1[n]+"\nATM:"+atm[j]+"\n"+d;
+					});
+				pg.append("rect")
 					.attr("width",(width-40)/temp.length/2)
 					.attr("height",function(d,i){return height/4-yScale2(d);})
 					.attr("x",function(d,i){return xScale2(i);})
 					.attr("y",function(d,i){return yScale2(d);})
-					.attr("fill",color(j))
+					.attr("fill",color2[j])
 					.attr("class","rect2_"+j)
 					.attr("transform","translate(30,5)")
 					.on("click",function(d,i){
@@ -341,6 +487,7 @@
 							svg2.selectAll('.rect2_5')
 								.attr("stroke","rgba(255,255,255,0)")
 								.attr("stroke-width",0);
+							Observer.fireEvent("VPI1", "cancel", "view1");
 						}else{
 							/*
 							d3.text("data/view1/day/VPI1/v"+vpi1[i]+".csv",function(data){
@@ -381,6 +528,32 @@
 						return '';
 					}else{
 						return i;
+					}
+				})
+				.on("click",function(d,i){
+					if(s2[0]==2&&s2[1]==i){
+						console.log("cancel");
+						s2 = [0,0];
+						svg2.selectAll('.rect2_5')
+							.attr("stroke","rgba(255,255,255,0)")
+							.attr("stroke-width",0);
+						Observer.fireEvent("VPI1", "cancel", "view1");
+					}else{
+						Observer.fireEvent("VPI1", vpi1[i], "view1");
+						s2 = [2,i];
+						console.log("vpi1:"+vpi1[i]);
+						svg2.selectAll('.rect2_5')
+							.attr("stroke",function(d,n){
+								if(n==i) return "black";
+								else return d3.select(this).attr("fill");
+							})
+							.attr("stroke-width",function(d,n){
+								if(n==i) return 2;
+								else return 0;
+							});
+						svg3.selectAll('.rect3_5')
+							.attr("stroke","rgba(255,255,255,0)")
+							.attr("stroke-width",0);
 					}
 				});
 		}
@@ -496,6 +669,7 @@
 							.attr("x",0)
 							.attr("y",height/4);
 						console.log("cancel");
+						Observer.fireEvent("port", "cancel", "view1");
 					}else{
 						s1_i = i;
 						s1.transition()
@@ -525,6 +699,7 @@
 							.attr("width",0)
 							.attr("x",0)
 							.attr("y",height/4);
+						Observer.fireEvent("port", "cancel", "view1");
 					}else{
 						s1_i = i;
 						console.log(port[i]);
@@ -547,6 +722,30 @@
 					.attr("height",height/2-yScale1(show_d[s1_i])-yScale1(show_s[s1_i]))
 					.attr("y",yScale1(show_d[s1_i]+show_s[s1_i]));
 			}
+			svg1.selectAll(".port")
+				.on("click", function(d,i){
+					if(s1.attr("x")==xScale1(i)-1){
+						console.log("cancel");
+						s1_i = -1;
+						s1.transition()
+							.duration(700)
+							.attr("height",0)
+							.attr("width",0)
+							.attr("x",0)
+							.attr("y",height/4);
+						Observer.fireEvent("port","cancel", "view1");
+					}else{
+						s1_i = i;
+						console.log(port[i]);
+						s1.transition()
+							.duration(700)
+							.attr("height",height/2-yScale1(show_d[i])-yScale1(show_s[i]))
+							.attr("width",(width-40)/show_s.length/2+2)
+							.attr("x",xScale1(i)-1)
+							.attr("y",yScale1(show_d[i]+show_s[i]));
+						Observer.fireEvent("port", port[i], "view1");
+					}
+				});
 		}
 
 
