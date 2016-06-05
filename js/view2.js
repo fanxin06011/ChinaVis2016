@@ -24,6 +24,19 @@
 						var vp2=[];
 						var srcport=[];
 						var dstport=[];
+						 var average1=0;
+						 var yvc=0;//标志是否选中该筛选事件
+                      var yvp=0;
+                     var yport=0;
+                   var yip=0;
+              var vc;
+              var vp;
+             var port;
+             var ipre=[];
+
+			  
+				var average2=0;
+				var fangcha=0;
 						var date=[-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
 						21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,
 						42,43,44,45,46,47,48,49,50,51,52];
@@ -62,7 +75,7 @@ var svg = d3.select("#view2")
 							svg.selectAll("g").remove();
        svg.selectAll("path").remove();
         svg.selectAll("line").remove();
-        svg.selectAll("circle").remove();
+        svg.selectAll("rect").remove();
        svg.selectAll("text").remove();
 		d3.csv("./data/view2/Uqip.csv",function(error,csvdata)
 				{
@@ -147,10 +160,7 @@ var svg = d3.select("#view2")
 								repeat[parseInt(d.DSTID)-1]++;
 								dstsum[parseInt(d.DSTID)-1]++;
 						});
-			 var average1=0;
-			  
-				var average2=0;
-				var fangcha=0;
+			
 					
 			 for(var i=0;i<repeat.length;i++)
 			 {
@@ -281,6 +291,7 @@ var svg = d3.select("#view2")
 					nodes[i].name=a;
 					nodes[i].srtnum=srtsum[i];
 					nodes[i].dstnum=dstsum[i];
+					nodes[i].flagip=0;
 				 }
 				 
 				 
@@ -317,11 +328,8 @@ var svg = d3.select("#view2")
 				console.log("权重等");
 				console.log(srcport);
 			    console.log(dstport);
-				//console.log(vp1);
-				//console.log(vp2);
 				
-				 
- // console.log(edges);
+				
 				
 		
 		
@@ -337,11 +345,11 @@ var svg = d3.select("#view2")
 				.links(edges)		//指定连线数组
 				.size([width,height])	//指定范围
 				.linkDistance(function(d,i)
-				{return 50;
+				{return 40;
 
 				})	//指定连线长度
-				.charge(-80)
-				.gravity(0.5);	//相互之间的作用力
+				.charge(-70)
+				.gravity(0.4);	//相互之间的作用力
 		
 		force.start();	//开始作用
         var repeat1=repeat;
@@ -359,10 +367,10 @@ var svg = d3.select("#view2")
 
 		 srclinear=d3.scale.linear()
 								.domain([0, srcmax])
-								.range([1, 10]);
+								.range([2, 4]);
 		 dstlinear=d3.scale.linear()
 								.domain([0, dstmax])
-								.range([1, 10]);
+								.range([2, 4]);
 		
 	
 		 colorlinear = d3.scale.linear()
@@ -381,58 +389,56 @@ var svg = d3.select("#view2")
 							.style("stroke-width",1);	
 
 		//添加节点	
-var svg_nodes = svg.selectAll("circle")
-							.data(nodes)
-							.enter()
-							.append("circle")
-							.attr("r",2)
-							.style("fill",function(d,i){
-								if(repeat[i]==repeatMax1)return "blue";
-								else 
-								return compute(colorlinear(repeat[i]));
-							})
-							.on("dblclick",function(d,i){
-									console.log(repeat[i]);
-									d.fixed=false;								
-								})
-							.on("click",function(d,i){
-									console.log(d);
-									Observer.fireEvent("addip", [parseInt(d.name)], "view2");								
-								})
-							.call(drag);	//使得节点能够拖动
+// var svg_nodes = svg.selectAll("circle")
+// 							.data(nodes)
+// 							.enter()
+// 							.append("circle")
+// 							.attr("r",2)
+// 							.style("fill","#33ffff")
+// 							.on("dblclick",function(d,i){
+// 									console.log(repeat[i]);
+// 									d.fixed=false;								
+// 								})
+// 							.on("click",function(d,i){
+// 									console.log(d);
+// 									Observer.fireEvent("addip", [parseInt(d.name)], "view2");								
+// 								})
+// 							.call(drag);	//使得节点能够拖动
 
    
 						
 	
 
-		// var svg_nodes = svg.selectAll("rect")  
-		// 						.data(nodes)  
-		// 						.enter()  
-		// 						.append("rect")  
-		// 						.attr("width",function(d,i){
-		// 							if(d.srtnum>(average1+3*fangcha)){return 15;}
-		// 							else{
-		// 								return srclinear(d.srtnum);
-		// 							}
+		var svg_nodes = svg.selectAll("rect")  
+								.data(nodes)  
+								.enter()  
+								.append("rect")  
+								.attr("width",function(d,i){
+									if(d.srtnum>(average1+3*fangcha)){return 6;}
+									else{
+										//console.log(srclinear(d.srtnum));
+										return srclinear(d.srtnum);
+									}
 									
-		// 						})  
-		// 						.attr("height",function(d,i){
-		// 							if(d.dstnum>(average1+3*fangcha)){return 15;}
-		// 							else{
-		// 								return dstlinear(d.dstnum);
-		// 							}
+								})  
+								.attr("height",function(d,i){
+									if(d.dstnum>(average1+3*fangcha)){return 6;}
+									else{
+										//console.log(dstlinear(d.dstnum));
+										return dstlinear(d.dstnum);
+									}
 									
-		// 						})
-		// 					    .style("fill",function(d,i){
-		// 						if(repeat[i]>(average1+3*fangcha))return "blue";
-		// 						else 
-		// 						return compute(colorlinear(repeat[i]));
-		// 					})
-		// 					.on("dblclick",function(d,i){
-		// 							console.log(repeat[i]);
-		// 							d.fixed=false;								
-		// 						})
-		// 					.call(drag);	//使得节点能够拖动
+								})
+							    .style("fill","#33ffff")
+							    .on("click",function(d,i){
+									console.log(d);
+ 									Observer.fireEvent("addip", [parseInt(d.name)], "view2");								
+ 								})
+							.on("dblclick",function(d,i){
+									console.log(repeat[i]);
+									d.fixed=false;								
+								})
+							.call(drag);	//使得节点能够拖动
               svg_nodes.append("title")
 						.text(function(d,i) { return repeat[i]});
 		//添加描述节点的文字
@@ -458,14 +464,18 @@ var svg_nodes = svg.selectAll("circle")
 					.attr("y2",function(d){ return d.target.y; });
 			 
 			 //更新节点坐标
-			 svg_nodes.attr("cx",function(d){ return d.x; })
-					.attr("cy",function(d){ return d.y; });
+			 svg_nodes.attr("x",function(d){ return d.x; })
+					.attr("y",function(d){ return d.y; });
 
 			 //更新文字坐标
 			/* svg_texts.attr("x", function(d){ return d.x; })
 				.attr("y", function(d){ return d.y; });
 				*/
 		});
+		if(yvp==1)gaoliang1(vp);
+    if(yvc==1)gaoliang2(vc);
+	if(yport==1)portfilter(port);
+	if(yip==1)ipgaoliang(ipre);
 	});
 	}
 
@@ -486,13 +496,6 @@ var svg_nodes = svg.selectAll("circle")
 // 	}
 // 							});
 // }
-var yvc=0;//标志是否选中该筛选事件
-        var yvp=0;
-        var yport=0;
-        var yip=0;
-var vc;
-var vp;
-var port;
 
 
 	function portfilter(m)
@@ -535,17 +538,42 @@ var port;
 		//var dstmax=_.max(dstsum);
 
 		
-		 		
+		 	
 							
-				svg.selectAll("circle")
+				svg.selectAll("rect")
 							.data(nodes)
 							.transition()
-							.duration(1000)	
-							.attr("r",function(d){
+							.duration(1000)
+							.attr("width",function(d){
+								if(d.flagip==1)return 6;//highlight ip颜色
+								else{
 									if(_.indexOf(f,d.name)!=-1||
-										_.indexOf(g,d.name)!=-1)return 5;
-									else return 2;})		
+										_.indexOf(g,d.name)!=-1)return 6;//筛选颜色
+									else //初始颜色
+										{
+											if(d.srtnum>(average1+3*fangcha)){return 6;}
+									else{
+										return srclinear(d.srtnum);
+									}
+									
+								}}})  
+						  	.attr("height",function(d){
+								if(d.flagip==1)return 6;
+								else{
+									if(_.indexOf(f,d.name)!=-1||
+										_.indexOf(g,d.name)!=-1)return 6;
+									else 
+										{
+											if(d.dstnum>(average1+3*fangcha)){return 6;}
+									else{
+										return dstlinear(d.dstnum);
+									}
+									
+								}}})  
 							.style("fill",function(d,i){
+
+							if(d.flagip==1)return "red";
+							else{
 								if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)==-1)return "green";
 								else if(_.indexOf(g,d.name)!=-1&&
 									_.indexOf(f,d.name)==-1)return "yellow";
@@ -557,7 +585,7 @@ var port;
 								   else 
 								   return compute(colorlinear(repeat[i]));
 								}
-							});
+							}});
 	} 
 
 			  function gaoliang1(n)
@@ -600,15 +628,40 @@ var port;
 		
 		 		
 							
-				svg.selectAll("circle")
+				svg.selectAll("rect")
 							.data(nodes)
 							.transition()
 							.duration(1000)	
-							.attr("r",function(d){
+							.attr("width",function(d){
+								if(d.flagip==1)return 6;//highlight ip颜色
+								else{
 									if(_.indexOf(f,d.name)!=-1||
-										_.indexOf(g,d.name)!=-1)return 5;
-									else return 2;})		
+										_.indexOf(g,d.name)!=-1)return 6;//筛选颜色
+									else //初始颜色
+										{
+											if(d.srtnum>(average1+3*fangcha)){return 6;}
+									else{
+										return srclinear(d.srtnum);
+									}
+									
+								}}})  
+						  	.attr("height",function(d){
+								if(d.flagip==1)return 6;
+								else{
+									if(_.indexOf(f,d.name)!=-1||
+										_.indexOf(g,d.name)!=-1)return 6;
+									else 
+										{
+											if(d.dstnum>(average1+3*fangcha)){return 6;}
+									else{
+										return dstlinear(d.dstnum);
+									}
+									
+								}}})  	
 							.style("fill",function(d,i){
+								if(d.flagip==1){console.log(d.name);return 6;}
+								else
+								{
 								if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)==-1)return "green";
 								else if(_.indexOf(g,d.name)!=-1&&
 									_.indexOf(f,d.name)==-1)return "yellow";
@@ -620,6 +673,7 @@ var port;
 								   else 
 								   return compute(colorlinear(repeat[i]));
 								}
+							}
 							});
 								
 }
@@ -655,15 +709,39 @@ function gaoliang2(m)
    	console.log(g);
 								
 							
-				svg.selectAll("circle")
+				svg.selectAll("rect")
 							.data(nodes)
 							.transition()
 							.duration(1000)	
-							.attr("r",function(d){
+							.attr("width",function(d){
+								if(d.flagip==1)return 6;//highlight ip颜色
+								else{
 									if(_.indexOf(f,d.name)!=-1||
-										_.indexOf(g,d.name)!=-1)return 10;
-									else return 2;})		
+										_.indexOf(g,d.name)!=-1)return 6;//筛选颜色
+									else //初始颜色
+										{
+											if(d.srtnum>(average1+3*fangcha)){return 6;}
+									else{
+										return srclinear(d.srtnum);
+									}
+									
+								}}})  
+						  	.attr("height",function(d){
+								if(d.flagip==1)return 6;
+								else{
+									if(_.indexOf(f,d.name)!=-1||
+										_.indexOf(g,d.name)!=-1)return 6;
+									else 
+										{
+											if(d.dstnum>(average1+3*fangcha)){return 6;}
+									else{
+										return dstlinear(d.dstnum);
+									}
+									
+								}}})  		
 							.style("fill",function(d,i){
+								if(d.flagip==1){console.log(d.name);return "red";}
+								else{
 								if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)==-1)return "green";
 								else if(_.indexOf(g,d.name)!=-1&&
 									_.indexOf(f,d.name)==-1)return "yellow";
@@ -675,8 +753,87 @@ function gaoliang2(m)
 								   else 
 								   return compute(colorlinear(repeat[i]));
 								}
+							}
 							});
 								
+}
+
+function ipgaoliang(data)
+{
+	console.log("12313");
+	console.log(data);
+	
+	for(var i=0;i<nodes.length;i++)
+
+	{
+		if(_.indexOf(data,parseInt(nodes[i].name))!=-1){console.log("flagip");nodes[i].flagip=1;}
+	}
+	svg.selectAll("rect")
+							.data(nodes)
+							.transition()
+							.duration(1000)	
+							.attr("width",function(d){
+									if(d.flagip==1){console.log(d.name);return 6;}
+									else {
+										if(d.srtnum>(average1+3*fangcha)){return 6;}
+									else{
+										return srclinear(d.srtnum);
+									}}})
+							.attr("height",function(d){
+									if(d.flagip==1){console.log(d.name);return 6;}
+									else {
+										if(d.dstnum>(average1+3*fangcha)){return 6;}
+									else{
+										return dstlinear(d.dstnum);
+									}}})		
+							.style("fill",function(d,i){
+								if(d.flagip==1){console.log(d.name);return 6;}
+								else {if(repeat[i]==repeatMax1)return "blue";
+								   else 
+								   return compute(colorlinear(repeat[i]));
+							}
+							});
+if(yvp==1)gaoliang1(vp);
+if(yvc==1)gaoliang2(vc);
+if(yport==1)portfilter(port);
+
+
+
+}
+function recoverip()
+{
+	for(var r=0;r<nodes.length;r++)
+	{
+		nodes[r].flagip=0;
+	}
+
+	svg.selectAll("rect")
+							.data(nodes)
+							.attr("width",function(d,i){
+									if(d.srtnum>(average1+3*fangcha)){return 6;}
+									else{
+										return srclinear(d.srtnum);
+									}
+									
+								})  
+								.attr("height",function(d,i){
+									if(d.dstnum>(average1+3*fangcha)){return 6;}
+									else{
+										return dstlinear(d.dstnum);
+									}
+									
+								})
+							.style("fill",function(d,i){
+								if(repeat[i]==repeatMax1)return "blue";
+								else 
+								return compute(colorlinear(repeat[i]));
+							});
+
+	if(yvp==1)gaoliang1(vp);
+    if(yvc==1)gaoliang2(vc);
+	if(yport==1)portfilter(port);
+
+
 }
 
 function recovervpc()
@@ -691,14 +848,35 @@ function recovervpc()
 		 		
 							
 				
-svg.selectAll("circle")
+svg.selectAll("rect")
 							.data(nodes)
-							.attr("r",2)
+							.attr("width",function(d)
+								{
+									if(d.flagip==1)return 6;
+									else {
+										if(d.srtnum>(average1+3*fangcha)){return 6;}
+									else{
+										return srclinear(d.srtnum);
+
+									}
+								}})
+							.attr("height",function(d)
+								{
+									if(d.flagip==1)return 6;
+									else {
+										if(d.dstnum>(average1+3*fangcha)){return 6;}
+									else{
+										return dstlinear(d.dstnum);
+
+									}
+								}})
 							.style("fill",function(d,i){
+								if(d.flagip==1)return "red";
+								else{
 								if(repeat[i]==repeatMax1)return "blue";
 								else 
 								return compute(colorlinear(repeat[i]));
-							});
+							}});
 if(yport==1)portfilter(port);
 
 }
@@ -714,14 +892,35 @@ function recoverport()
    	}
 		 							
 	console.log(repeatMax1);			
-svg.selectAll("circle")
+svg.selectAll("rect")
 							.data(nodes)
-							.attr("r",2)
+							.attr("width",function(d)
+								{
+									if(d.flagip==1)return 6;
+									else {
+										if(d.srtnum>(average1+3*fangcha)){return 6;}
+									else{
+										return srclinear(d.srtnum);
+
+									}
+								}})
+							.attr("height",function(d)
+								{
+									if(d.flagip==1)return 6;
+									else {
+										if(d.dstnum>(average1+3*fangcha)){return 6;}
+									else{
+										return dstlinear(d.dstnum);
+
+									}
+								}})
 							.style("fill",function(d,i){
+								if(d.flagip==1)return "red";
+								else{
 								if(repeat[i]==repeatMax1)return "blue";
 								else 
 								return compute(colorlinear(repeat[i]));
-							});
+							}});
 if(yvc==1){console.log("vp1");gaoliang2(vc);}
 if(yvp==1){console.log("vp2");gaoliang1(vp);}
 }
@@ -740,6 +939,13 @@ if(yvp==1){console.log("vp2");gaoliang1(vp);}
         
         
 		view2.onMessage = function(message, data, from){
+			if(message=="highlight"){
+				if(from=="view3"){
+					if(data[0]=="undefined"){yip=0;recoverip();}
+					else
+						{yip=1;ipre=data;recoverip();ipgaoliang(data);}
+				}
+			}
 			if(message == "VCI1"){
 				if(from == "view1"){
 
