@@ -14,6 +14,7 @@
 			.on("click", function(d, i){
 				if(document.getElementById("view4"+i).checked){
 					change_type(i);
+					//console.log(i)
 				}
 			});
 
@@ -161,6 +162,7 @@
 				url:url,
 				success:function(data){
 					show_m=data;
+					console.log(show_m);
 					redraw_m();
 				},
 				error:function(xhr){
