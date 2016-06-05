@@ -151,28 +151,24 @@
 		view4.onMessage = function(message, data, from){
 			if(message=="VCI1"){
 				if(from=="view1"){
-					type_c = data;
-					change_type(data_type);
+					if(data!="cancel"){
+						type_c = data;
+						change_type(data_type);
+					}
 				}
 			}else if(message=="VPI1"){
 				if(from=="view1"){
-					//if(data=="cancel"){
-					//	show_m = show_m_temp;
-					//	redraw_m();
-					//}else{
+					if(data!="cancel"){
 						type_p = data;
 						change_type(data_type);
-					//}
+					}
 				}
 			}else if(message=="port"){
 				if(from=="view1"){
-					//if(data=="cancel"){
-					//	show_m = show_m_temp;
-					//	redraw_m();
-					//}else{
+					if(data!="cancel"){
 						type_port = data;
 						change_type(data_type);
-					//}
+					}
 				}
 			}
 
