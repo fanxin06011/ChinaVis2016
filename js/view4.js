@@ -161,7 +161,7 @@
 			$.ajax({
 				url:url,
 				success:function(data){
-					show_m=data;
+					show_m=data["cnt"];
 					console.log(show_m);
 					redraw_m();
 				},
