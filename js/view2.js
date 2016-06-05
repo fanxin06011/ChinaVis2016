@@ -25,7 +25,7 @@
 						var srcport=[];
 						var dstport=[];
 						var date=[-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
-						21,22,23,24,25,26,27,,28,29,30,31,32,33,34,35,36,37,38,39,40,41,
+						21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,
 						42,43,44,45,46,47,48,49,50,51,52];
 
 		var srclinear;
@@ -268,9 +268,7 @@ var svg = d3.select("#view2")
 			  }
 			  
 			  
-			  console.log(srtsum);
-			  console.log(dstsum);
-			  console.log(repeat);
+			 
 
 			  
 
@@ -289,7 +287,9 @@ var svg = d3.select("#view2")
 				 for(var i=0;i<sources.length;i++)
 				 {
 				 	
-					edges.push({source:Number(sources[i]),target:Number(targets[i]),vp1:vp1[i],vp2:vp2[i]});
+					edges.push({source:Number(sources[i]),target:Number(targets[i]),
+						vp1:vp1[i],vp2:vp2[i],srcport:srcport[i],dstport:dstport[i],
+						flagvc:0,flagport:0});
 					
 						
 				 }
@@ -308,17 +308,17 @@ var svg = d3.select("#view2")
 				edges=_.filter(edges,function(item){return item.source!=-1&&item.target!=-1;});
 				
 
+
 				
 				
 					
 					console.log(nodes);	   
-				 console.log(sources);
-					console.log(targets);
 			   console.log(edges);
 				console.log("权重等");
-				console.log(weight);
-				console.log(vp1);
-				console.log(vp2);
+				console.log(srcport);
+			    console.log(dstport);
+				//console.log(vp1);
+				//console.log(vp2);
 				
 				 
  // console.log(edges);
@@ -337,10 +337,11 @@ var svg = d3.select("#view2")
 				.links(edges)		//指定连线数组
 				.size([width,height])	//指定范围
 				.linkDistance(function(d,i)
-				{return 60;
+				{return 50;
 
 				})	//指定连线长度
-				.charge(-100);	//相互之间的作用力
+				.charge(-80)
+				.gravity(0.5);	//相互之间的作用力
 		
 		force.start();	//开始作用
         var repeat1=repeat;
@@ -384,7 +385,7 @@ var svg_nodes = svg.selectAll("circle")
 							.data(nodes)
 							.enter()
 							.append("circle")
-							.attr("r",3)
+							.attr("r",2)
 							.style("fill",function(d,i){
 								if(repeat[i]==repeatMax1)return "blue";
 								else 
@@ -470,8 +471,94 @@ var svg_nodes = svg.selectAll("circle")
 
 			
 //return gaoliang(m);
+// function recover()
+// {
+// svg.selectAll("circle")
+// 							.data(nodes)
+// 							.attr("r",2)
+// 							.style("fill",function(d,i){
+// 								if(repeat[i]==repeatMax1)return "blue";
+// 								else 
+// 								return compute(colorlinear(repeat[i]));
+// 	for(var i=0;i<edges.length;i++)
+// 	{
+// 		edges[i].flag=0;
+// 	}
+// 							});
+// }
+var yvc=0;//标志是否选中该筛选事件
+        var yvp=0;
+        var yport=0;
+        var yip=0;
+var vc;
+var vp;
+var port;
 
-			 
+
+	function portfilter(m)
+{
+	var f=[];
+   	var g=[];
+   	for(var r=0;r<edges.length;r++)
+    	{
+
+    	if(yvc==1||yvp==1)
+    {
+    	 if(edges[r].flagvc==1)
+   		{
+   			if(edges[r].srcport==m)
+   			{f.push(edges[r].source.name);edges[r].flagport=1;}
+   		    if(edges[r].dstport==m)
+   			{ g.push(edges[r].target.name);edges[r].flagport=1;}
+     	}
+     }
+     	else
+     {
+     		if(edges[r].srcport==m)
+   			{f.push(edges[r].source.name);edges[r].flagport=1;}
+   		    if(edges[r].dstport==m)
+   			{ g.push(edges[r].target.name);edges[r].flagport=1;}
+   	}
+    	
+    }
+   	
+
+
+   	console.log(f);
+   	console.log(g);
+						
+	var a = d3.rgb(100,100,100); 
+		var b = d3.rgb(255,0,0);    
+		compute= d3.interpolate(a,b); 
+		
+		//var srcmax=_.max(srtsum);
+		//var dstmax=_.max(dstsum);
+
+		
+		 		
+							
+				svg.selectAll("circle")
+							.data(nodes)
+							.transition()
+							.duration(1000)	
+							.attr("r",function(d){
+									if(_.indexOf(f,d.name)!=-1||
+										_.indexOf(g,d.name)!=-1)return 5;
+									else return 2;})		
+							.style("fill",function(d,i){
+								if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)==-1)return "green";
+								else if(_.indexOf(g,d.name)!=-1&&
+									_.indexOf(f,d.name)==-1)return "yellow";
+								else if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)!=-1)
+									return "orange";
+								else  
+								{
+									if(repeat[i]==repeatMax1)return "blue";
+								   else 
+								   return compute(colorlinear(repeat[i]));
+								}
+							});
+	} 
 
 			  function gaoliang1(n)
    {
@@ -480,16 +567,38 @@ var svg_nodes = svg.selectAll("circle")
    	var g=[];
    	for(var r=0;r<edges.length;r++)
    	{
-   		if(edges[r].vp1==n)
+   		if(yport==1)
+   		{
+   		if(edges[r].flagport==1)
+   		{
+   		  if(edges[r].vp1==n)
    			{f.push(edges[r].source.name);
    			 g.push(edges[r].target.name);
+   			 edges[r].flagvc=1;
+   			}
+   		}
+   		}
+   		else
+   			if(edges[r].vp1==n)
+   			{f.push(edges[r].source.name);
+   			 g.push(edges[r].target.name);
+   			 edges[r].flagvc=1;
    			}
    	}
 
 
    	console.log(f);
    	console.log(g);
-								
+						
+	var a = d3.rgb(100,100,100); 
+		var b = d3.rgb(255,0,0);    
+		compute= d3.interpolate(a,b); 
+		
+		//var srcmax=_.max(srtsum);
+		//var dstmax=_.max(dstsum);
+
+		
+		 		
 							
 				svg.selectAll("circle")
 							.data(nodes)
@@ -497,8 +606,8 @@ var svg_nodes = svg.selectAll("circle")
 							.duration(1000)	
 							.attr("r",function(d){
 									if(_.indexOf(f,d.name)!=-1||
-										_.indexOf(g,d.name)!=-1)return 7;
-									else return 3;})		
+										_.indexOf(g,d.name)!=-1)return 5;
+									else return 2;})		
 							.style("fill",function(d,i){
 								if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)==-1)return "green";
 								else if(_.indexOf(g,d.name)!=-1&&
@@ -522,51 +631,22 @@ function gaoliang2(m)
    	var g=[];
    	for(var r=0;r<edges.length;r++)
    	{
-   		if(edges[r].vp2==m)
+   		if(yport==1)
+   		{
+   		if(edges[r].flagport==1)
+   		{
+   		  if(edges[r].vp2==m)
    			{f.push(edges[r].source.name);
    			 g.push(edges[r].target.name);
+   			 edges[r].flagvc==1;
    			}
-   	}
-
-
-   	console.log(f);
-   	console.log(g);
-								
-						$("id1").	
-				svg.selectAll("circle")
-							.data(nodes)
-							.transition()
-							.duration(1000)	
-							.attr("r",function(d){
-									if(_.indexOf(f,d.name)!=-1||
-										_.indexOf(g,d.name)!=-1)return 10;
-									else return 5;})		
-							.style("fill",function(d,i){
-								if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)==-1)return "green";
-								else if(_.indexOf(g,d.name)!=-1&&
-									_.indexOf(f,d.name)==-1)return "yellow";
-								else if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)!=-1)
-									return "orange";
-								else  
-								{
-									if(repeat[i]==repeatMax1)return "blue";
-								   else 
-								   return compute(colorlinear(repeat[i]));
-								}
-							});
-								
-}
-
-function gaoliang(n,m)
-   {
-
-   	var f=[];
-   	var g=[];
-   	for(var r=0;r<edges.length;r++)
-   	{
-   		if(edges[r].vp1==n&&edges[r].vp2==m)
+   		}
+   		}
+   		else
+   			if(edges[r].vp2==m)
    			{f.push(edges[r].source.name);
    			 g.push(edges[r].target.name);
+   			 edges[r].flagvc==1;
    			}
    	}
 
@@ -582,7 +662,7 @@ function gaoliang(n,m)
 							.attr("r",function(d){
 									if(_.indexOf(f,d.name)!=-1||
 										_.indexOf(g,d.name)!=-1)return 10;
-									else return 5;})		
+									else return 2;})		
 							.style("fill",function(d,i){
 								if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)==-1)return "green";
 								else if(_.indexOf(g,d.name)!=-1&&
@@ -598,6 +678,56 @@ function gaoliang(n,m)
 							});
 								
 }
+
+function recovervpc()
+{
+	
+   
+   	for(var r=0;r<edges.length;r++)
+   	{
+   		    edges[r].flagvc=0;
+    }
+		
+		 		
+							
+				
+svg.selectAll("circle")
+							.data(nodes)
+							.attr("r",2)
+							.style("fill",function(d,i){
+								if(repeat[i]==repeatMax1)return "blue";
+								else 
+								return compute(colorlinear(repeat[i]));
+							});
+if(yport==1)portfilter(port);
+
+}
+
+function recoverport()
+{
+	
+   
+   	for(var r=0;r<edges.length;r++)
+   	{
+   		 		    edges[r].flagport=0;
+   		 
+   	}
+		 							
+	console.log(repeatMax1);			
+svg.selectAll("circle")
+							.data(nodes)
+							.attr("r",2)
+							.style("fill",function(d,i){
+								if(repeat[i]==repeatMax1)return "blue";
+								else 
+								return compute(colorlinear(repeat[i]));
+							});
+if(yvc==1){console.log("vp1");gaoliang2(vc);}
+if(yvp==1){console.log("vp2");gaoliang1(vp);}
+}
+
+
+
 			$("#button0").click(function(){
 			gaoliang1(0);
 		 });
@@ -607,26 +737,75 @@ function gaoliang(n,m)
 
 		 draw(1);
 
-        var y1=0;
-        var y2=0;
-        var datavp0;
-        var datavp1;
+        
+        
 		view2.onMessage = function(message, data, from){
-			if(message == "pipe1"){
-				if(from == "view1"){y1=1-y1;datavp0=data;
-					if(y1==1&&y2==1)gaoliang(data,datavp1);
-					else if(y1==1&&y2==0)gaoliang1(data);
-					else if(y1==0&&y2==1)gaoliang2(datavp1);
+			if(message == "VCI1"){
+				if(from == "view1"){
+
+					if(data=="cancel"){yvc=0;recovervpc();}
+					else
+						{
+							vc=parseInt(data);
+					recovervpc();
+					yvc=1;
+					if(yvp==1)
+					{
+						
+						yvp=0;
+						console.log(parseInt(data));
+						gaoliang2(parseInt(data));
+
+
+					}
 					else 
-					{svg.selectAll("circle")
-							.data(nodes)
-							.attr("r",5)
-							.style("fill",function(d,i){
-								if(repeat[i]==repeatMax1)return "blue";
-								else 
-								return compute(colorlinear(repeat[i]));
-							});
+					{
+						console.log(parseInt(data));
+						gaoliang2(parseInt(data));
 							}
+
+				}
+			}
+			}
+			if(message=="VPI1")
+			{
+				if(from=="view1")
+				{
+					if(data=="cancel"){yvp=0;recovervpc();}
+					else
+					{
+						vp=parseInt(data);
+					recovervpc();
+					yvp=1;
+					if(yvc==1)
+					{
+						console.log(parseInt(data));
+						yvc=0;
+						gaoliang1(parseInt(data));
+
+
+					}
+					else 
+					{
+						console.log(parseInt(data));
+						gaoliang1(parseInt(data));
+							}
+						}
+				}
+			}
+			if(message=="port")
+			{
+				if(from=="view1")
+				{
+					if(data=="cancel"){console.log("111");yport=0;recoverport();}
+					else
+				{
+					port=parseInt(data);
+					recoverport();
+
+					portfilter(parseInt(data));
+					yport=1;
+				}
 
 				}
 			}
@@ -640,10 +819,9 @@ function gaoliang(n,m)
 					console.log(k+"and"+k1);
 					var w=(k-7)*31+k1-22;
                     draw(w+1);
-
-
 				}
 			}
+
 		}
 		Observer.addView(view2);
 		return view2;
