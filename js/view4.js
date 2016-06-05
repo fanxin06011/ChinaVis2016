@@ -157,11 +157,14 @@
 			var flag=sd;//0-作为srcip 1-作为dstip
 			var url="ipdata.php";
 			url=url+"?ipselected="+id+"&SrcOrDst="+flag;
-
+	
 			$.ajax({
+				dataType:'json',
 				url:url,
 				success:function(data){
+
 					show_m=data["cnt"];
+					
 					console.log(show_m);
 					redraw_m();
 				},
