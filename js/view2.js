@@ -2,7 +2,7 @@
 	function View2(Observer){
 		var view2={};
 		var width=$("div#view2").width();
-		var height=$("div#view2").height();		
+		var height=$("div#view2").height()-$("#view2radio").height();		
 			           var a;
 			           var compute;
                       var edges=[];
@@ -33,6 +33,7 @@
               var vp;
              var port;
              var ipre=[];
+             var current=1;
 
 			  
 				var average2=0;
@@ -292,6 +293,7 @@ var svg = d3.select("#view2")
 					nodes[i].srtnum=srtsum[i];
 					nodes[i].dstnum=dstsum[i];
 					nodes[i].flagip=0;
+					nodes[i].flagport=0;
 				 }
 				 
 				 
@@ -300,7 +302,7 @@ var svg = d3.select("#view2")
 				 	
 					edges.push({source:Number(sources[i]),target:Number(targets[i]),
 						vp1:vp1[i],vp2:vp2[i],srcport:srcport[i],dstport:dstport[i],
-						flagvc:0,flagport:0});
+						flagvc:0});
 					
 						
 				 }
@@ -500,28 +502,30 @@ var svg = d3.select("#view2")
 
 	function portfilter(m)
 {
+	console.log("yvc:"+yvc+"yvp"+yvp);
 	var f=[];
    	var g=[];
+   	if(yvc==1||yvp==1)
    	for(var r=0;r<edges.length;r++)
     	{
 
-    	if(yvc==1||yvp==1)
-    {
+    	
+    
     	 if(edges[r].flagvc==1)
    		{
    			if(edges[r].srcport==m)
-   			{f.push(edges[r].source.name);edges[r].flagport=1;}
+   			{f.push(edges[r].source.name);nodes[edges[r].source.index].flagport=1; console.log("once");}
    		    if(edges[r].dstport==m)
-   			{ g.push(edges[r].target.name);edges[r].flagport=1;}
+   			{ g.push(edges[r].target.name);nodes[edges[r].target.index].flagport=1; console.log("once");}
      	}
      }
-     	else
-     {
+     if(yvc==0&&yvp==0)
+     		for(var r=0;r<edges.length;r++)
+     		{
      		if(edges[r].srcport==m)
-   			{f.push(edges[r].source.name);edges[r].flagport=1;}
+   			{f.push(edges[r].source.name);nodes[edges[r].source.index].flagport=1;}
    		    if(edges[r].dstport==m)
-   			{ g.push(edges[r].target.name);edges[r].flagport=1;}
-   	}
+   			{ g.push(edges[r].target.name);nodes[edges[r].target.index].flagport=1;}
     	
     }
    	
@@ -593,25 +597,31 @@ var svg = d3.select("#view2")
 
    	var f=[];
    	var g=[];
+   	if(yport==1)
+   	{
    	for(var r=0;r<edges.length;r++)
    	{
-   		if(yport==1)
-   		{
-   		if(edges[r].flagport==1)
-   		{
+   		
+   		
    		  if(edges[r].vp1==n)
-   			{f.push(edges[r].source.name);
-   			 g.push(edges[r].target.name);
+   			{
+   				if(nodes[edges[r].source.index].flagport==1)f.push(edges[r].source.name);
+   			 if(nodes[edges[r].target.index].flagport==1)g.push(edges[r].target.name);
    			 edges[r].flagvc=1;
    			}
-   		}
-   		}
-   		else
+   		
+   	}	
+   }
+    if(yport==0)
+    {
+      for(var r=0;r<edges.length;r++)
+      {
    			if(edges[r].vp1==n)
    			{f.push(edges[r].source.name);
    			 g.push(edges[r].target.name);
    			 edges[r].flagvc=1;
    			}
+   		}
    	}
 
 
@@ -680,27 +690,35 @@ var svg = d3.select("#view2")
 
 function gaoliang2(m)
    {
-
+  console.log(yport);
    	var f=[];
    	var g=[];
+   	if(yport==1)
+   	{
+
    	for(var r=0;r<edges.length;r++)
    	{
-   		if(yport==1)
-   		{
-   		if(edges[r].flagport==1)
-   		{
+
+   		
+   	
+   		
+   		
    		  if(edges[r].vp2==m)
-   			{f.push(edges[r].source.name);
-   			 g.push(edges[r].target.name);
-   			 edges[r].flagvc==1;
+   			{if(nodes[edges[r].source.index].flagport==1)f.push(edges[r].source.name);
+   			 if(nodes[edges[r].target.index].flagport==1)g.push(edges[r].target.name);
+   			 console.log("once");
+   			 edges[r].flagvc=1;
    			}
-   		}
-   		}
-   		else
-   			if(edges[r].vp2==m)
+   		
+   	}
+   }
+   	else if(yport==0)
+   		for(var r=0;r<edges.length;r++)
+   			{
+   				if(edges[r].vp2==m)
    			{f.push(edges[r].source.name);
    			 g.push(edges[r].target.name);
-   			 edges[r].flagvc==1;
+   			 edges[r].flagvc=1;
    			}
    	}
 
@@ -885,9 +903,9 @@ function recoverport()
 {
 	
    
-   	for(var r=0;r<edges.length;r++)
+   	for(var r=0;r<nodes.length;r++)
    	{
-   		 		    edges[r].flagport=0;
+   		 		    nodes[r].flagport=0;
    		 
    	}
 		 							
@@ -926,13 +944,15 @@ if(yvp==1){console.log("vp2");gaoliang1(vp);}
 }
 
 
-
-			$("#button0").click(function(){
-			gaoliang1(0);
-		 });
-			$("#button1").click(function(){
-			draw(0);
-		 });
+        $("#view2all").click(function(){
+			if(document.getElementById("view2all").checked){
+				draw(0);
+			}});
+		$("#view2day").click(function(){
+			if(document.getElementById("view2day").checked){
+				draw(current);
+			}});
+			
 
 		 draw(1);
 
@@ -953,8 +973,10 @@ if(yvp==1){console.log("vp2");gaoliang1(vp);}
 					else
 						{
 							vc=parseInt(data);
+							
 					recovervpc();
 					yvc=1;
+					
 					if(yvp==1)
 					{
 						
@@ -981,8 +1003,10 @@ if(yvp==1){console.log("vp2");gaoliang1(vp);}
 					else
 					{
 						vp=parseInt(data);
+						
 					recovervpc();
 					yvp=1;
+					
 					if(yvc==1)
 					{
 						console.log(parseInt(data));
@@ -1006,11 +1030,12 @@ if(yvp==1){console.log("vp2");gaoliang1(vp);}
 					if(data=="cancel"){console.log("111");yport=0;recoverport();}
 					else
 				{
+					yport=1;
 					port=parseInt(data);
 					recoverport();
 
 					portfilter(parseInt(data));
-					yport=1;
+					
 				}
 
 				}
@@ -1024,6 +1049,7 @@ if(yvp==1){console.log("vp2");gaoliang1(vp);}
 					var k1=parseInt(data.slice(8,10));
 					console.log(k+"and"+k1);
 					var w=(k-7)*31+k1-22;
+					current=w+1;
                     draw(w+1);
 				}
 			}
