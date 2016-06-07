@@ -210,7 +210,7 @@
 				}
 			}else if(message=="addip"){
 				if(from=="view2"){
-					type_ip = data;
+					type_ip = parseInt(data)+1;
 					change_type(data_type);
 				}
 			}
