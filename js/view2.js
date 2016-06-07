@@ -8,7 +8,7 @@
                       var edges=[];
                       var drag;
 					   var nodes=[];
-					   var  repeatMax1;
+				
 						var repeat=[];  
 						var weight=[];
 						var data1;
@@ -29,6 +29,7 @@
                       var yvp=0;
                      var yport=0;
                    var yip=0;
+                   var change=0;
               var vc;
               var vp;
              var port;
@@ -38,15 +39,18 @@
 			  
 				var average2=0;
 				var fangcha=0;
-						var date=[-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
+				var date=[-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
 						21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,
 						42,43,44,45,46,47,48,49,50,51,52];
 
 		var srclinear;
 		var dstlinear;
+		var srclinear1;
+		var dstlinear1;
+		var maxbig;
 		
 	
-		var colorlinear;	
+		
 var svg = d3.select("#view2")
 					.append("svg")
 					.attr("width",width)
@@ -59,7 +63,7 @@ var svg = d3.select("#view2")
                       edges=[];
                       
 					   nodes=[];
-					   repeatMax1;
+					   
 						 repeat=[];  
 						 weight=[];
 							
@@ -248,7 +252,7 @@ var svg = d3.select("#view2")
 			  arraynode=arraynode1;
 
              
-			
+		
 
 			 
 
@@ -347,37 +351,45 @@ var svg = d3.select("#view2")
 				.links(edges)		//指定连线数组
 				.size([width,height])	//指定范围
 				.linkDistance(function(d,i)
-				{return 40;
+				{return 35;
 
 				})	//指定连线长度
-				.charge(-70)
+				.charge(-105)
 				.gravity(0.4);	//相互之间的作用力
 		
 		force.start();	//开始作用
-        var repeat1=repeat;
-         repeatMax1=_.max(repeat1);
-       // repeat1.splice(_.indexOf(_.max(repeat1)),1);
-        var repeatMax2=_.max(repeat1);
-        var a = d3.rgb(100,100,100); 
-		var b = d3.rgb(255,0,0);    
-		compute= d3.interpolate(a,b); 
-		console.log(repeatMax1);
-		console.log(repeatMax2);
+       
+       
+     
+      
+        
 		
-		var srcmax=_.max(srtsum);
-		var dstmax=_.max(dstsum);
+		var srtsum1=srtsum;
+		var dstsum1=dstsum;
+		srtsum1.splice(_.indexOf(srtsum,_.max(srtsum)),1);
+		dstsum1.splice(_.indexOf(dstsum,_.max(dstsum)),1);
+
+
+		
+		var srcmax=_.max(srtsum1);
+		var dstmax=_.max(dstsum1);
 
 		 srclinear=d3.scale.linear()
 								.domain([0, srcmax])
-								.range([2, 4]);
+								.range([2, 5]);
 		 dstlinear=d3.scale.linear()
 								.domain([0, dstmax])
-								.range([2, 4]);
+								.range([2, 5]);
 		
-	
-		 colorlinear = d3.scale.linear()
-								.domain([0, repeatMax2])
-								.range([0, 1]);		
+	     srclinear1=d3.scale.linear()
+								.domain([0, srcmax])
+								.range([4, 10]);
+		 dstlinear1=d3.scale.linear()
+								.domain([0, dstmax])
+								.range([4, 10]);
+		maxbig=12;
+		
+			
 	  drag = force.drag()
 						.on("dragstart",function(d,i){
 							d.fixed = true; 
@@ -390,24 +402,7 @@ var svg = d3.select("#view2")
 							.style("stroke","#ccc")
 							.style("stroke-width",1);	
 
-		//添加节点	
-// var svg_nodes = svg.selectAll("circle")
-// 							.data(nodes)
-// 							.enter()
-// 							.append("circle")
-// 							.attr("r",2)
-// 							.style("fill","#33ffff")
-// 							.on("dblclick",function(d,i){
-// 									console.log(repeat[i]);
-// 									d.fixed=false;								
-// 								})
-// 							.on("click",function(d,i){
-// 									console.log(d);
-// 									Observer.fireEvent("addip", [parseInt(d.name)], "view2");								
-// 								})
-// 							.call(drag);	//使得节点能够拖动
 
-   
 						
 	
 
@@ -416,7 +411,7 @@ var svg = d3.select("#view2")
 								.enter()  
 								.append("rect")  
 								.attr("width",function(d,i){
-									if(d.srtnum>(average1+3*fangcha)){return 6;}
+									if(d.srtnum>(average1+4*fangcha)){return 7;}
 									else{
 										//console.log(srclinear(d.srtnum));
 										return srclinear(d.srtnum);
@@ -424,7 +419,7 @@ var svg = d3.select("#view2")
 									
 								})  
 								.attr("height",function(d,i){
-									if(d.dstnum>(average1+3*fangcha)){return 6;}
+									if(d.dstnum>(average1+4*fangcha)){return 7;}
 									else{
 										//console.log(dstlinear(d.dstnum));
 										return dstlinear(d.dstnum);
@@ -481,23 +476,10 @@ var svg = d3.select("#view2")
 	});
 	}
 
-			
-//return gaoliang(m);
-// function recover()
-// {
-// svg.selectAll("circle")
-// 							.data(nodes)
-// 							.attr("r",2)
-// 							.style("fill",function(d,i){
-// 								if(repeat[i]==repeatMax1)return "blue";
-// 								else 
-// 								return compute(colorlinear(repeat[i]));
-// 	for(var i=0;i<edges.length;i++)
-// 	{
-// 		edges[i].flag=0;
-// 	}
-// 							});
-// }
+	    
+		var a = d3.rgb(0,255,000); //src
+		var b = d3.rgb(0,0,255);    //dst
+		compute= d3.interpolate(a,b); 
 
 
 	function portfilter(m)
@@ -534,12 +516,6 @@ var svg = d3.select("#view2")
    	console.log(f);
    	console.log(g);
 						
-	var a = d3.rgb(100,100,100); 
-		var b = d3.rgb(255,0,0);    
-		compute= d3.interpolate(a,b); 
-		
-		//var srcmax=_.max(srtsum);
-		//var dstmax=_.max(dstsum);
 
 		
 		 	
@@ -549,26 +525,38 @@ var svg = d3.select("#view2")
 							.transition()
 							.duration(1000)
 							.attr("width",function(d){
-								if(d.flagip==1)return 6;//highlight ip颜色
+								if(d.flagip==1)return maxbig;//highlight ip颜色
 								else{
 									if(_.indexOf(f,d.name)!=-1||
-										_.indexOf(g,d.name)!=-1)return 6;//筛选颜色
+										_.indexOf(g,d.name)!=-1)
+										{
+											if(d.srtnum>(average1+4*fangcha)){return maxbig;}
+									else{
+										return srclinear1(d.srtnum);
+										}
+										}//筛选颜色
 									else //初始颜色
 										{
-											if(d.srtnum>(average1+3*fangcha)){return 6;}
+											if(d.srtnum>(average1+4*fangcha)){return 7;}
 									else{
 										return srclinear(d.srtnum);
 									}
 									
 								}}})  
 						  	.attr("height",function(d){
-								if(d.flagip==1)return 6;
+								if(d.flagip==1)return maxbig;
 								else{
 									if(_.indexOf(f,d.name)!=-1||
-										_.indexOf(g,d.name)!=-1)return 6;
+										_.indexOf(g,d.name)!=-1)
+									{
+										if(d.dstnum>(average1+4*fangcha)){return maxbig;}
+									else{
+										return dstlinear1(d.dstnum);
+									}
+								}
 									else 
 										{
-											if(d.dstnum>(average1+3*fangcha)){return 6;}
+											if(d.dstnum>(average1+4*fangcha)){return 7;}
 									else{
 										return dstlinear(d.dstnum);
 									}
@@ -578,20 +566,16 @@ var svg = d3.select("#view2")
 
 							if(d.flagip==1)return "red";
 							else{
-								if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)==-1)return "green";
-								else if(_.indexOf(g,d.name)!=-1&&
-									_.indexOf(f,d.name)==-1)return "yellow";
-								else if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)!=-1)
-									return "orange";
+								if(_.indexOf(f,d.name)!=-1||_.indexOf(g,d.name)!=-1)return "#00ee00";
+								
 								else  
 								{
-									if(repeat[i]==repeatMax1)return "blue";
-								   else 
-								   return compute(colorlinear(repeat[i]));
+									 return "#33ffff";
 								}
 							}});
-	} 
+	}
 
+	
 			  function gaoliang1(n)
    {
 
@@ -628,9 +612,7 @@ var svg = d3.select("#view2")
    	console.log(f);
    	console.log(g);
 						
-	var a = d3.rgb(100,100,100); 
-		var b = d3.rgb(255,0,0);    
-		compute= d3.interpolate(a,b); 
+	
 		
 		//var srcmax=_.max(srtsum);
 		//var dstmax=_.max(dstsum);
@@ -643,45 +625,52 @@ var svg = d3.select("#view2")
 							.transition()
 							.duration(1000)	
 							.attr("width",function(d){
-								if(d.flagip==1)return 6;//highlight ip颜色
+								if(d.flagip==1)return maxbig;//highlight ip颜色
 								else{
 									if(_.indexOf(f,d.name)!=-1||
-										_.indexOf(g,d.name)!=-1)return 6;//筛选颜色
+										_.indexOf(g,d.name)!=-1)
+										{
+											if(d.srtnum>(average1+4*fangcha)){return maxbig;}
+									else{
+										return srclinear1(d.srtnum);
+										}
+										}//筛选颜色
 									else //初始颜色
 										{
-											if(d.srtnum>(average1+3*fangcha)){return 6;}
+											if(d.srtnum>(average1+4*fangcha)){return 7;}
 									else{
 										return srclinear(d.srtnum);
 									}
 									
 								}}})  
 						  	.attr("height",function(d){
-								if(d.flagip==1)return 6;
+								if(d.flagip==1)return maxbig;
 								else{
 									if(_.indexOf(f,d.name)!=-1||
-										_.indexOf(g,d.name)!=-1)return 6;
+										_.indexOf(g,d.name)!=-1)
+									{
+										if(d.dstnum>(average1+4*fangcha)){return maxbig;}
+									else{
+										return dstlinear1(d.dstnum);
+									}
+								}
 									else 
 										{
-											if(d.dstnum>(average1+3*fangcha)){return 6;}
+											if(d.dstnum>(average1+4*fangcha)){return 7;}
 									else{
 										return dstlinear(d.dstnum);
 									}
 									
 								}}})  	
 							.style("fill",function(d,i){
-								if(d.flagip==1){console.log(d.name);return 6;}
+								if(d.flagip==1){console.log(d.name);return "red";}
 								else
 								{
-								if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)==-1)return "green";
-								else if(_.indexOf(g,d.name)!=-1&&
-									_.indexOf(f,d.name)==-1)return "yellow";
-								else if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)!=-1)
-									return "orange";
+								if(_.indexOf(f,d.name)!=-1||_.indexOf(g,d.name)!=-1)return "#00ee00";
+								
 								else  
 								{
-									if(repeat[i]==repeatMax1)return "blue";
-								   else 
-								   return compute(colorlinear(repeat[i]));
+									 return "#33ffff";
 								}
 							}
 							});
@@ -732,26 +721,38 @@ function gaoliang2(m)
 							.transition()
 							.duration(1000)	
 							.attr("width",function(d){
-								if(d.flagip==1)return 6;//highlight ip颜色
+								if(d.flagip==1)return maxbig;//highlight ip颜色
 								else{
 									if(_.indexOf(f,d.name)!=-1||
-										_.indexOf(g,d.name)!=-1)return 6;//筛选颜色
+										_.indexOf(g,d.name)!=-1)
+										{
+											if(d.srtnum>(average1+4*fangcha)){return maxbig;}
+									else{
+										return srclinear1(d.srtnum);
+										}//筛选颜色
+									}
 									else //初始颜色
 										{
-											if(d.srtnum>(average1+3*fangcha)){return 6;}
+											if(d.srtnum>(average1+4*fangcha)){return 7;}
 									else{
 										return srclinear(d.srtnum);
 									}
 									
 								}}})  
 						  	.attr("height",function(d){
-								if(d.flagip==1)return 6;
+								if(d.flagip==1)return maxbig;
 								else{
 									if(_.indexOf(f,d.name)!=-1||
-										_.indexOf(g,d.name)!=-1)return 6;
+										_.indexOf(g,d.name)!=-1)
+									{
+										if(d.dstnum>(average1+4*fangcha)){return maxbig;}
+									else{
+										return dstlinear1(d.dstnum);
+									}
+								}
 									else 
 										{
-											if(d.dstnum>(average1+3*fangcha)){return 6;}
+											if(d.dstnum>(average1+4*fangcha)){return 7;}
 									else{
 										return dstlinear(d.dstnum);
 									}
@@ -760,16 +761,11 @@ function gaoliang2(m)
 							.style("fill",function(d,i){
 								if(d.flagip==1){console.log(d.name);return "red";}
 								else{
-								if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)==-1)return "green";
-								else if(_.indexOf(g,d.name)!=-1&&
-									_.indexOf(f,d.name)==-1)return "yellow";
-								else if(_.indexOf(f,d.name)!=-1&&_.indexOf(g,d.name)!=-1)
-									return "orange";
+								if(_.indexOf(f,d.name)!=-1||_.indexOf(g,d.name)!=-1)return "#00ee00";
+								
 								else  
 								{
-									if(repeat[i]==repeatMax1)return "blue";
-								   else 
-								   return compute(colorlinear(repeat[i]));
+									 return "#33ffff";
 								}
 							}
 							});
@@ -791,24 +787,22 @@ function ipgaoliang(data)
 							.transition()
 							.duration(1000)	
 							.attr("width",function(d){
-									if(d.flagip==1){console.log(d.name);return 6;}
+									if(d.flagip==1){console.log(d.name);return maxbig;}
 									else {
-										if(d.srtnum>(average1+3*fangcha)){return 6;}
+										if(d.srtnum>(average1+4*fangcha)){return 7;}
 									else{
 										return srclinear(d.srtnum);
 									}}})
 							.attr("height",function(d){
-									if(d.flagip==1){console.log(d.name);return 6;}
+									if(d.flagip==1){console.log(d.name);return maxbig;}
 									else {
-										if(d.dstnum>(average1+3*fangcha)){return 6;}
+										if(d.dstnum>(average1+4*fangcha)){return 7;}
 									else{
 										return dstlinear(d.dstnum);
 									}}})		
 							.style("fill",function(d,i){
-								if(d.flagip==1){console.log(d.name);return 6;}
-								else {if(repeat[i]==repeatMax1)return "blue";
-								   else 
-								   return compute(colorlinear(repeat[i]));
+								if(d.flagip==1){console.log(d.name);return "red";}
+								else { return "#33ffff";
 							}
 							});
 if(yvp==1)gaoliang1(vp);
@@ -828,23 +822,21 @@ function recoverip()
 	svg.selectAll("rect")
 							.data(nodes)
 							.attr("width",function(d,i){
-									if(d.srtnum>(average1+3*fangcha)){return 6;}
+									if(d.srtnum>(average1+4*fangcha)){return 7;}
 									else{
 										return srclinear(d.srtnum);
 									}
 									
 								})  
 								.attr("height",function(d,i){
-									if(d.dstnum>(average1+3*fangcha)){return 6;}
+									if(d.dstnum>(average1+4*fangcha)){return 7;}
 									else{
 										return dstlinear(d.dstnum);
 									}
 									
 								})
 							.style("fill",function(d,i){
-								if(repeat[i]==repeatMax1)return "blue";
-								else 
-								return compute(colorlinear(repeat[i]));
+								 return "#33ffff";
 							});
 
 	if(yvp==1)gaoliang1(vp);
@@ -870,9 +862,9 @@ svg.selectAll("rect")
 							.data(nodes)
 							.attr("width",function(d)
 								{
-									if(d.flagip==1)return 6;
+									if(d.flagip==1)return maxbig;
 									else {
-										if(d.srtnum>(average1+3*fangcha)){return 6;}
+										if(d.srtnum>(average1+4*fangcha)){return 7;}
 									else{
 										return srclinear(d.srtnum);
 
@@ -880,9 +872,9 @@ svg.selectAll("rect")
 								}})
 							.attr("height",function(d)
 								{
-									if(d.flagip==1)return 6;
+									if(d.flagip==1)return maxbig;
 									else {
-										if(d.dstnum>(average1+3*fangcha)){return 6;}
+										if(d.dstnum>(average1+4*fangcha)){return 7;}
 									else{
 										return dstlinear(d.dstnum);
 
@@ -891,9 +883,7 @@ svg.selectAll("rect")
 							.style("fill",function(d,i){
 								if(d.flagip==1)return "red";
 								else{
-								if(repeat[i]==repeatMax1)return "blue";
-								else 
-								return compute(colorlinear(repeat[i]));
+								 return "#33ffff";
 							}});
 if(yport==1)portfilter(port);
 
@@ -909,14 +899,14 @@ function recoverport()
    		 
    	}
 		 							
-	console.log(repeatMax1);			
+				
 svg.selectAll("rect")
 							.data(nodes)
 							.attr("width",function(d)
 								{
-									if(d.flagip==1)return 6;
+									if(d.flagip==1)return maxbig;
 									else {
-										if(d.srtnum>(average1+3*fangcha)){return 6;}
+										if(d.srtnum>(average1+4*fangcha)){return 7;}
 									else{
 										return srclinear(d.srtnum);
 
@@ -924,9 +914,9 @@ svg.selectAll("rect")
 								}})
 							.attr("height",function(d)
 								{
-									if(d.flagip==1)return 6;
+									if(d.flagip==1)return maxbig;
 									else {
-										if(d.dstnum>(average1+3*fangcha)){return 6;}
+										if(d.dstnum>(average1+4*fangcha)){return 7;}
 									else{
 										return dstlinear(d.dstnum);
 
@@ -935,9 +925,7 @@ svg.selectAll("rect")
 							.style("fill",function(d,i){
 								if(d.flagip==1)return "red";
 								else{
-								if(repeat[i]==repeatMax1)return "blue";
-								else 
-								return compute(colorlinear(repeat[i]));
+								 return "#33ffff";
 							}});
 if(yvc==1){console.log("vp1");gaoliang2(vc);}
 if(yvp==1){console.log("vp2");gaoliang1(vp);}
@@ -946,15 +934,15 @@ if(yvp==1){console.log("vp2");gaoliang1(vp);}
 
         $("#view2all").click(function(){
 			if(document.getElementById("view2all").checked){
-				draw(0);
+				change=0;draw(0);
 			}});
 		$("#view2day").click(function(){
 			if(document.getElementById("view2day").checked){
-				draw(current);
+				change=1;draw(current);
 			}});
 			
 
-		 draw(1);
+		 draw(0);
 
         
         
@@ -1044,6 +1032,8 @@ if(yvp==1){console.log("vp2");gaoliang1(vp);}
 				console.log("222");
 				if(from == "view5")
 				{
+					if(change==1)
+					{
 					console.log(222);
 					var k=parseInt(data[6]);
 					var k1=parseInt(data.slice(8,10));
@@ -1051,6 +1041,7 @@ if(yvp==1){console.log("vp2");gaoliang1(vp);}
 					var w=(k-7)*31+k1-22;
 					current=w+1;
                     draw(w+1);
+                }
 				}
 			}
 
