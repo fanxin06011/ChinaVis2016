@@ -66,16 +66,28 @@
 		}
 //console.log(show_m_temp);
 		function redraw_m(){
-			var mScale = d3.scale.linear()
-				.domain([0, d3.max(show_m, function(d, i){
-					return d3.max(d);
-				})])
+			var maxd = d3.max(show_m, function(d, i){
+				return d3.max(d);
+			});
+			var percent = 0.9;
+			var mScale_small = d3.scale.linear()
+				.domain([0, maxd*percent])
 				.range([0, 1]);
+			var mScale_large = d3.scale.linear()
+				.domain([maxd*percent, maxd])
+				.range([0.7, 1]);
 			for(var j = 1; j<53; j++){
 				for(var i = 0; i<24; i++){
 					svg4.selectAll(".h"+i+"d"+j)
 						.attr("fill", function(d){
-							return "rgba(255,0,0,"+mScale(show_m[j-1][i])+")";
+							var data = show_m[j-1][i];
+							if(data==0){
+								return "rgb(0,0,255)";
+							}else if(data>maxd*percent){
+								return "rgba(255,0,0,"+mScale_large(data)+")";
+							}else{
+								return "rgba(0,255,0,"+mScale_small(data)+")";
+							}
 						});
 					var s = "week:"+Math.floor(j/7+1)+"\nday:"+j+"\nhour:"+i;
 					s = s + "\n"+show_m[j-1][i];
