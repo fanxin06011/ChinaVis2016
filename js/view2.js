@@ -107,7 +107,7 @@ var svg = d3.select("#view2")
 
 				{ 
 					var s;
-				    if(day==0)s="data/view2/Data.csv"
+				    if(day==0)s="data/view2/Data1.csv"
 					else s="./data/view2/day/day"+date[day]+".csv";
 
 					 d3.csv(s,function(error,csvdata3)
@@ -227,7 +227,7 @@ var svg = d3.select("#view2")
 			  weight=_.filter(weight,function(num){return num>average2;
 
 			  });
-
+    
 			  var arraynode1=[];
 			  arraynode1=_.filter(arraynode,function(num){
 			  	return (repeat[num]>average1+fangcha)&&
@@ -251,7 +251,7 @@ var svg = d3.select("#view2")
 			  });
 			  arraynode=arraynode1;
 
-             
+           
 		
 
 			 
@@ -351,11 +351,11 @@ var svg = d3.select("#view2")
 				.links(edges)		//指定连线数组
 				.size([width,height])	//指定范围
 				.linkDistance(function(d,i)
-				{return 35;
+				{return 80;
 
 				})	//指定连线长度
-				.charge(-105)
-				.gravity(0.4);	//相互之间的作用力
+				.charge(-70)
+				.gravity(0.3);	//相互之间的作用力
 		
 		force.start();	//开始作用
        
