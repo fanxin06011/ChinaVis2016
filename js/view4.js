@@ -82,11 +82,11 @@
 						.attr("fill", function(d){
 							var data = show_m[j-1][i];
 							if(data==0){
-								return "rgb(0,0,255)";
+								return "#06799F";
 							}else if(data>maxd*percent){
-								return "rgba(255,0,0,"+mScale_large(data)+")";
+								return "rgba(248,62,91,"+mScale_large(data)+")";
 							}else{
-								return "rgba(0,255,0,"+mScale_small(data)+")";
+								return "rgba(103,155,0,"+mScale_small(data)+")";
 							}
 						});
 					var s = "week:"+Math.floor(j/7+1)+"\nday:"+j+"\nhour:"+i;
