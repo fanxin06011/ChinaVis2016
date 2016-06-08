@@ -717,7 +717,7 @@ var svg = d3.select("#view2")
 								}}})  
 							.style("fill",function(d,i){
 
-							if(d.flagip==1)return "red";
+							if(d.flagip==1)return "pink";
 							else{
 								if(_.indexOf(f,d.name)!=-1||_.indexOf(g,d.name)!=-1)return "#00ee00";
 								
@@ -816,7 +816,7 @@ var svg = d3.select("#view2")
 									
 								}}})  	
 							.style("fill",function(d,i){
-								if(d.flagip==1){console.log(d.name);return "red";}
+								if(d.flagip==1){console.log(d.name);return "pink";}
 								else
 								{
 								if(_.indexOf(f,d.name)!=-1||_.indexOf(g,d.name)!=-1)return "#00ee00";
@@ -912,7 +912,7 @@ function gaoliang2(m)
 									
 								}}})  		
 							.style("fill",function(d,i){
-								if(d.flagip==1){console.log(d.name);return "red";}
+								if(d.flagip==1){console.log(d.name);return "pink";}
 								else{
 								if(_.indexOf(f,d.name)!=-1||_.indexOf(g,d.name)!=-1)return "#00ee00";
 								
@@ -954,7 +954,7 @@ function ipgaoliang(data)
 										return dstlinear(d.dstnum);
 									}}})		
 							.style("fill",function(d,i){
-								if(d.flagip==1){console.log(d.name);return "red";}
+								if(d.flagip==1){console.log(d.name);return "pink";}
 								else { return "#33ffff";
 							}
 							});
@@ -1034,7 +1034,7 @@ svg.selectAll("rect")
 									}
 								}})
 							.style("fill",function(d,i){
-								if(d.flagip==1)return "red";
+								if(d.flagip==1)return "pink";
 								else{
 								 return "#33ffff";
 							}});
@@ -1076,7 +1076,7 @@ svg.selectAll("rect")
 									}
 								}})
 							.style("fill",function(d,i){
-								if(d.flagip==1)return "red";
+								if(d.flagip==1)return "pink";
 								else{
 								 return "#33ffff";
 							}});
