@@ -77,7 +77,7 @@
 		  //console.log(iphighlight);
 		  for(var m=0;m<dd.length;m++){
 			  var tmp=ipdataAll[parseInt(dd[m])].IP;
-			  $("#view3inner").append("<p>"+tmp+"</p>");
+			  $("#view3inner").append("<p>"+tmp+"("+dd[m]+")"+"</p>");
 			  $("#view3inner p:last").attr("id","view3p"+dd[m]);
 			  $("#view3inner p:last").css("background-color",function(){
 				  //console.log(dd[m]);
@@ -87,6 +87,8 @@
 			  });
 			  $("#view3inner p:last").addClass("idlistp");
 			  $("#view3inner p:last").append('<a class="deleteid"><i class="fa fa-remove "></i></a>');
+			  //$("#view3inner p:last").append("g").append("title").text("id:"+dd[m]);
+			  
 			  $(".deleteid:last").click(function(){
 				    adddelflag=1;
 

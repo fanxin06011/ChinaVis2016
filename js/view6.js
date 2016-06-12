@@ -411,14 +411,18 @@
 			if(message == "matrix_selected"){
 				if(from == "view4"){
 					console.log(data);
-
-					var dtmp=data.split("d");
-					var day=parseInt(dtmp[1]);
-					var hour=parseInt(dtmp[0].split("h")[1]);
-					console.log(day);
-					console.log(hour);
-					timeselected=day*86400+hour*3600;
-					choosedata();
+					if(data!="cancel"){
+						var dtmp=data.split("d");
+						var day=parseInt(dtmp[1]);
+						var hour=parseInt(dtmp[0].split("h")[1]);
+						timeselected=(day-1)*86400+hour*3600;
+						console.log(timeselected);
+						choosedata();
+					}else{
+						timeselected=1;
+						choosedata();
+					}
+					
 				}
 			}
 			if(message == "highlight"){
