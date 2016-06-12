@@ -95,6 +95,45 @@ var svg = d3.select("#view2")
 					.append("svg")
 					.attr("width",width)
 					.attr("height",height);
+	var svg0=svg;
+	svg=svg.append("g");
+	var weighthint=svg0.append("g").append("rect")
+				.attr("fill","black" )
+				.attr("y",0.1*height)
+				.attr("x",0.1*width)
+				.attr("height",1)
+				.attr("width", 30);
+	var highthint=svg0.append("g").append("rect")
+				.attr("fill","black" )
+				.attr("y",0.1*height)
+				.attr("x",0.1*width)
+				.attr("height",30)
+				.attr("width", 1);
+	var weighttext=svg0.append("g")
+				.selectAll("text")
+				.data(["srccnt"])  
+				.enter()
+				.append("text")
+				.attr("transform",(d,i)=>("translate("+0.1*width+","+height*0.1+")"))
+				.text(function(d,i){return d;})
+				.attr("font-size", 7+"px")
+				.attr("dy",-2) 
+				.attr("dx",3)
+				.attr("fill","black")
+				.attr("font-family", "Trebuchet MS");
+	var highttext=svg0.append("g")
+				.selectAll("text")
+				.data(["dstcnt"])  
+				.enter()
+				.append("text")
+				.attr("transform",(d,i)=>("translate("+0.1*width+","+height*0.1+")"))
+				.text(function(d,i){return d;})
+				.attr("font-size", 7+"px")
+				.attr("dy",15) 
+				.attr("dx",-20)
+				.attr("fill","black")
+				.attr("font-family", "Trebuchet MS");
+	
 	function drawAll(){
 			svg.selectAll("g").remove();
             svg.selectAll("path").remove();
