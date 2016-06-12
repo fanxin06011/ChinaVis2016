@@ -17,12 +17,51 @@
 					//console.log(i)
 				}
 			});
-
+		var svg5 = d3.select("div#view4")
+			.append("svg")
+			.attr("height", 20)
+			.attr("width", 24*pix)
+			.attr("class", "m2");
 		var svg4 = d3.select("div#view4")
 			.append("svg")
 			.attr("height", 53*pix)
 			.attr("width", 24*pix)
 			.attr("class", "m");
+
+
+		svg5.append("rect")
+			.attr("width",10)
+			.attr("height",10)
+			.attr("x",0)
+			.attr("y",0)
+			.attr("fill","#06799F");
+		svg5.append("text")
+			.attr("x",12)
+			.attr("y",10)
+			.attr("class","v4t")
+			.text("NULL");
+		svg5.append("rect")
+			.attr("width",10)
+			.attr("height",10)
+			.attr("x",45)
+			.attr("y",0)
+			.attr("fill","rgba(248,62,91,1)");
+		svg5.append("text")
+			.attr("x",57)
+			.attr("y",10)
+			.attr("class","v4t")
+			.text("large");
+		svg5.append("rect")
+			.attr("width",10)
+			.attr("height",10)
+			.attr("x",90)
+			.attr("y",0)
+			.attr("fill","rgba(103,155,0,1)");
+		svg5.append("text")
+			.attr("x",102)
+			.attr("y",10)
+			.attr("class","v4t")
+			.text("small");
 		//初始化矩阵视图
 		for(var i = 1; i<54; i++){
 			show_m_temp.push([]);
