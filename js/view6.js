@@ -29,6 +29,9 @@
 		var vciselected=0;
 		var vciflag=0;
 		
+		var vpiselected=0;
+		var vpiflag=0;
+		
 		$("#view6all").click(function(){
 		  if(document.getElementById("view6all").checked){
 			idflag=0;
@@ -56,6 +59,16 @@
 		 }});
 		$("#view6vciselected").click(function(){
 		  if(document.getElementById("view6vciselected").checked){
+			vciflag=1;
+			choosedata();
+		 }});
+		 $("#view6vpiall").click(function(){
+		  if(document.getElementById("view6vpiall").checked){
+			vciflag=0;
+			choosedata();
+		 }});
+		$("#view6vpiselected").click(function(){
+		  if(document.getElementById("view6vpiselected").checked){
 			vciflag=1;
 			choosedata();
 		 }});
@@ -225,7 +238,7 @@
 			idstr=idstr.substr(0,idstr.length-1);
 			$.ajax({ url:url, 
 				type:"post",
-				data:{timestart:timeselected,idlist:idstr,idflag:idflag,portselected:portselected,vciselected:vciselected,portflag:portflag,vciflag:vciflag},
+				data:{timestart:timeselected,idlist:idstr,idflag:idflag,portselected:portselected,vciselected:vciselected,vpiselected:vpiselected,portflag:portflag,vciflag:vciflag,vpiflag:vpiflag},
 				dataType:'json',
 				success:function(data){  
 						dataAll=data;
@@ -479,6 +492,17 @@
 					if(data!="cancel"){
 						vciselected=parseInt(data);
 						if(vciflag==1){
+							choosedata();
+						}
+					}
+				}
+			}
+			if(message == "VPI1"){
+				if(from == "view1"){
+					console.log(data);
+					if(data!="cancel"){
+						vpiselected=parseInt(data);
+						if(vpiflag==1){
 							choosedata();
 						}
 					}

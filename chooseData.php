@@ -10,10 +10,12 @@ $timestart=$_POST["timestart"];
 $timeend=$timestart+3600;
 $idlist=$_POST["idlist"];
 $vciselected=$_POST["vciselected"];
+$vpiselected=$_POST["vpiselected"];
 $portselected=$_POST["portselected"];
 $idflag=$_POST["idflag"];
 $portflag=$_POST["portflag"];
 $vciflag=$_POST["vciflag"];
+$vpiflag=$_POST["vpiflag"];
 
 $con = mysqli_connect('localhost', 'vis2016', 'vis2016');
 
@@ -31,6 +33,9 @@ if($portflag==1){
 }
 if($vciflag==1){
 	$sql=$sql." AND VCI1 =".$vciselected."";
+}
+if($vpiflag==1){
+	$sql=$sql." AND VPI1 =".$vpiselected."";
 }
 //echo $sql;
 $result =  mysqli_query($con,$sql);
