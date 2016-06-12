@@ -23,6 +23,11 @@
 		var idflag=0;// «∑Ò…∏—°ip 0-no 1-yes
 		//var revsec=60;
 		//var nowsec=1;
+		var portselected=0;
+		var portflag=0;
+		
+		var vciselected=0;
+		var vciflag=0;
 		
 		$("#view6all").click(function(){
 		  if(document.getElementById("view6all").checked){
@@ -34,6 +39,27 @@
 			idflag=1;
 			choosedata();
 		 }});
+		$("#view6portall").click(function(){
+		  if(document.getElementById("view6portall").checked){
+			portflag=0;
+			choosedata();
+		 }});
+		 $("#view6portselected").click(function(){
+		  if(document.getElementById("view6portselected").checked){
+			portflag=1;
+			choosedata();
+		 }});
+		 $("#view6vciall").click(function(){
+		  if(document.getElementById("view6vciall").checked){
+			vciflag=0;
+			choosedata();
+		 }});
+		$("#view6vciselected").click(function(){
+		  if(document.getElementById("view6vciselected").checked){
+			vciflag=1;
+			choosedata();
+		 }});
+		
 		
 		var ipdataAll;
 		var totalip;
@@ -199,7 +225,7 @@
 			idstr=idstr.substr(0,idstr.length-1);
 			$.ajax({ url:url, 
 				type:"post",
-				data:{timestart:timeselected,idlist:idstr,idflag:idflag},
+				data:{timestart:timeselected,idlist:idstr,idflag:idflag,portselected:portselected,vciselected:vciselected,portflag:portflag,vciflag:vciflag},
 				dataType:'json',
 				success:function(data){  
 						dataAll=data;
@@ -434,6 +460,28 @@
 						choosedata();
 					}
 					
+				}
+			}
+			if(message == "port"){
+				if(from == "view1"){
+					console.log(data);
+					if(data!="cancel"){
+						portselected=parseInt(data);
+						if(portflag==1){
+							choosedata();
+						}
+					}
+				}
+			}
+			if(message == "VCI1"){
+				if(from == "view1"){
+					console.log(data);
+					if(data!="cancel"){
+						vciselected=parseInt(data);
+						if(vciflag==1){
+							choosedata();
+						}
+					}
 				}
 			}
 			if(message == "highlight"){

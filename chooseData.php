@@ -9,8 +9,11 @@ header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 $timestart=$_POST["timestart"];
 $timeend=$timestart+3600;
 $idlist=$_POST["idlist"];
+$vciselected=$_POST["vciselected"];
+$portselected=$_POST["portselected"];
 $idflag=$_POST["idflag"];
-
+$portflag=$_POST["portflag"];
+$vciflag=$_POST["vciflag"];
 
 $con = mysqli_connect('localhost', 'vis2016', 'vis2016');
 
@@ -22,6 +25,12 @@ mysqli_select_db($con,"vis");
 $sql="SELECT ID,FILELEN,SRCPORT,DSTPORT,TIMEINT,VCI1,VPI1,ATM1AALTYPE,SRCID,DSTID FROM data3 WHERE (TIMEINT>=".$timestart." and TIMEINT<= ".$timeend.")";
 if($idflag==1){
 	$sql=$sql." AND (SRCID IN(".$idlist.") OR DSTID IN(".$idlist."))";
+}
+if($portflag==1){
+	$sql=$sql." AND (SRCPORT =".$portselected." OR DSTPORT =".$portselected.")";
+}
+if($vciflag==1){
+	$sql=$sql." AND VCI1 =".$vciselected."";
 }
 //echo $sql;
 $result =  mysqli_query($con,$sql);
