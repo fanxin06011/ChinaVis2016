@@ -142,6 +142,7 @@
 
 		var foreground;
 		var foregroundg=svg.append("g");
+		var foregroundtitle;
 		var lightline;
 		var lightlineg=svg.append("g");
 		var highlightline;
@@ -274,7 +275,17 @@
 								$(this).attr("stroke","black");
 								$(this).attr("stroke","0.25");
 							});*/
-				
+			foregroundtitle=foreground.append("title").text(function(d,i){
+				//console.log(dataAll[i]);
+				var a=_.values(dataAll[i]);
+				var b=_.keys(dataAll[i]);
+				var s="";
+				for(var m=0;m<a.length;m++){
+					s=s+b[m]+":"+a[m]+" ";  
+				}
+				return s;
+			});
+			
 			gg.selectAll(".quantitative")
 				.data([]).exit().remove();
 
@@ -366,8 +377,8 @@
 		
 		    var actives = quantitatives.filter(function(p) { return !y[p].brush.empty(); });
 			var extents = actives.map(function(p) { return y[p].brush.extent(); });
-			//console.log(actives);
-			//console.log(extents);
+			console.log(actives);
+			console.log(extents);
 			if(actives.length==0){
 				//console.log("aaa");
 				foreground.attr("opacity",0.25);
